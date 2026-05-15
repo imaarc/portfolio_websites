@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Luminae — Skin That Speaks</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --cream:#F9F5EF;
+    --warm:#EDE5D8;
+    --gold:#B89A6A;
+    --dark:#1C1814;
+    --muted:#7A6F63;
+    --accent:#D4A96A;
+  }
+  html{scroll-behavior:smooth}
+  body{background:var(--cream);color:var(--dark);font-family:'DM Sans',sans-serif;font-weight:300;overflow-x:hidden}
+
+  /* NAV */
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:1.5rem 3rem;mix-blend-mode:multiply}
+  .nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;letter-spacing:.15em;color:var(--dark)}
+  .nav-links{display:flex;gap:2.5rem;list-style:none}
+  .nav-links a{text-decoration:none;color:var(--muted);font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;transition:color .3s}
+  .nav-links a:hover{color:var(--dark)}
+  .nav-cta{background:var(--dark);color:var(--cream);padding:.6rem 1.6rem;font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;transition:background .3s}
+  .nav-cta:hover{background:var(--gold)}
+
+  /* HERO */
+  .hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;position:relative;overflow:hidden}
+  .hero-left{display:flex;flex-direction:column;justify-content:flex-end;padding:8rem 3rem 5rem 3rem;position:relative;z-index:2}
+  .hero-tag{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem;opacity:0;animation:fadeUp .8s .3s forwards}
+  .hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(3.5rem,6vw,6rem);font-weight:300;line-height:1.05;margin-bottom:2rem;opacity:0;animation:fadeUp .8s .5s forwards}
+  .hero-title em{font-style:italic;color:var(--gold)}
+  .hero-sub{font-size:.95rem;line-height:1.8;color:var(--muted);max-width:380px;margin-bottom:3rem;opacity:0;animation:fadeUp .8s .7s forwards}
+  .hero-actions{display:flex;gap:1rem;align-items:center;opacity:0;animation:fadeUp .8s .9s forwards}
+  .btn-primary{background:var(--dark);color:var(--cream);padding:1rem 2.5rem;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;display:inline-block;transition:all .3s}
+  .btn-primary:hover{background:var(--gold)}
+  .btn-ghost{color:var(--muted);font-size:.8rem;letter-spacing:.08em;text-decoration:underline;text-underline-offset:4px}
+  .hero-right{position:relative;overflow:hidden}
+  .hero-img{width:100%;height:100%;object-fit:cover;transform:scale(1.05);animation:zoomOut 1.2s .2s forwards}
+  .hero-img-overlay{position:absolute;inset:0;background:linear-gradient(to right,var(--cream) 0%,transparent 30%)}
+
+  /* MARQUEE */
+  .marquee-wrap{background:var(--dark);color:var(--cream);padding:.9rem 0;overflow:hidden;white-space:nowrap}
+  .marquee-track{display:inline-flex;animation:marquee 20s linear infinite}
+  .marquee-item{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;padding:0 3rem;color:var(--gold)}
+  .marquee-dot{color:var(--cream);opacity:.3}
+
+  /* ABOUT */
+  .about{display:grid;grid-template-columns:1fr 1fr;gap:0;min-height:70vh}
+  .about-img-wrap{position:relative;overflow:hidden}
+  .about-img{width:100%;height:100%;object-fit:cover;display:block}
+  .about-content{background:var(--warm);padding:6rem 5rem;display:flex;flex-direction:column;justify-content:center}
+  .section-label{font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:1.2rem}
+  .section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,3.5vw,3.2rem);font-weight:300;line-height:1.15;margin-bottom:1.5rem}
+  .section-body{font-size:.9rem;line-height:1.9;color:var(--muted);margin-bottom:2rem}
+  .stat-row{display:flex;gap:3rem;margin-top:2.5rem;padding-top:2.5rem;border-top:1px solid rgba(0,0,0,.1)}
+  .stat-item{}
+  .stat-num{font-family:'Cormorant Garamond',serif;font-size:2.5rem;font-weight:300;color:var(--dark)}
+  .stat-label{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:.25rem}
+
+  /* PRODUCTS */
+  .products{padding:7rem 3rem;background:var(--cream)}
+  .products-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:4rem}
+  .products-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+  .product-card{background:var(--warm);overflow:hidden;cursor:pointer;group:true}
+  .product-img-wrap{aspect-ratio:3/4;overflow:hidden;position:relative}
+  .product-img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease}
+  .product-card:hover .product-img{transform:scale(1.04)}
+  .product-info{padding:1.5rem}
+  .product-name{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:400;margin-bottom:.4rem}
+  .product-desc{font-size:.8rem;color:var(--muted);line-height:1.6;margin-bottom:1rem}
+  .product-price{font-size:.85rem;font-weight:500;color:var(--dark)}
+  .product-btn{display:inline-block;margin-top:.75rem;font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;text-decoration:none;color:var(--dark);border-bottom:1px solid var(--gold);padding-bottom:2px;transition:color .3s}
+  .product-btn:hover{color:var(--gold)}
+
+  /* RITUAL */
+  .ritual{background:var(--dark);color:var(--cream);padding:8rem 3rem;text-align:center;position:relative;overflow:hidden}
+  .ritual::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(184,154,106,.15) 0%,transparent 70%);pointer-events:none}
+  .ritual-label{font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem}
+  .ritual-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,5vw,4.5rem);font-weight:300;line-height:1.1;max-width:700px;margin:0 auto 2rem}
+  .ritual-title em{font-style:italic;color:var(--accent)}
+  .ritual-sub{font-size:.9rem;line-height:1.9;color:rgba(255,255,255,.55);max-width:480px;margin:0 auto 3.5rem}
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;max-width:900px;margin:4rem auto 0;text-align:left}
+  .step{padding:2rem;border:1px solid rgba(255,255,255,.08)}
+  .step-num{font-family:'Cormorant Garamond',serif;font-size:2.5rem;font-weight:300;color:var(--gold);margin-bottom:.75rem}
+  .step-title{font-size:.85rem;font-weight:500;letter-spacing:.05em;margin-bottom:.5rem}
+  .step-desc{font-size:.8rem;color:rgba(255,255,255,.45);line-height:1.7}
+
+  /* TESTIMONIALS */
+  .testimonials{padding:7rem 3rem;background:var(--warm)}
+  .testimonials-header{text-align:center;margin-bottom:4rem}
+  .reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+  .review-card{background:var(--cream);padding:2rem;position:relative}
+  .review-stars{color:var(--gold);font-size:.9rem;margin-bottom:1rem;letter-spacing:.1em}
+  .review-text{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:300;font-style:italic;line-height:1.7;margin-bottom:1.25rem;color:var(--dark)}
+  .review-author{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+
+  /* CTA */
+  .cta-section{background:var(--gold);padding:6rem 3rem;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:4rem}
+  .cta-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3.5rem);font-weight:300;line-height:1.1;color:var(--dark)}
+  .cta-title em{font-style:italic}
+  .cta-right{display:flex;flex-direction:column;gap:1rem}
+  .cta-input{background:transparent;border:none;border-bottom:1px solid var(--dark);padding:.75rem 0;font-family:'DM Sans',sans-serif;font-size:.9rem;color:var(--dark);outline:none;width:100%}
+  .cta-input::placeholder{color:rgba(28,24,20,.5)}
+  .btn-dark{background:var(--dark);color:var(--cream);padding:1rem 2.5rem;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;border:none;cursor:pointer;transition:all .3s;align-self:flex-start;margin-top:.5rem}
+  .btn-dark:hover{background:rgba(28,24,20,.8)}
+  .cta-note{font-size:.72rem;color:rgba(28,24,20,.55);letter-spacing:.05em}
+
+  /* FOOTER */
+  footer{background:var(--dark);color:rgba(255,255,255,.45);padding:3rem;display:flex;justify-content:space-between;align-items:center;font-size:.75rem;letter-spacing:.08em}
+  .footer-logo{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:600;color:var(--cream);letter-spacing:.15em}
+  .footer-links{display:flex;gap:2rem;list-style:none}
+  .footer-links a{color:rgba(255,255,255,.4);text-decoration:none;transition:color .3s}
+  .footer-links a:hover{color:var(--gold)}
+
+  /* ANIMATIONS */
+  @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes zoomOut{from{transform:scale(1.05)}to{transform:scale(1)}}
+  @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  /* SCROLL REVEAL */
+  .reveal{opacity:0;transform:translateY(30px);transition:opacity .8s ease,transform .8s ease}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+
+  /* PLACEHOLDER IMAGES (CSS art) */
+  .img-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1rem;color:rgba(255,255,255,.3)}
+  .bg-skin1{background:linear-gradient(135deg,#C9A882,#A07850)}
+  .bg-skin2{background:linear-gradient(135deg,#D4B896,#B8926A)}
+  .bg-skin3{background:linear-gradient(135deg,#8B6E52,#6B5040)}
+  .bg-skin4{background:linear-gradient(135deg,#E8D5C0,#C4A882)}
+  .bg-skin5{background:linear-gradient(135deg,#BFA07A,#8B6E52)}
+
+  @media(max-width:900px){
+    nav{padding:1.5rem}
+    .nav-links{display:none}
+    .hero{grid-template-columns:1fr}
+    .hero-right{height:50vw}
+    .hero-left{padding:6rem 1.5rem 3rem}
+    .about{grid-template-columns:1fr}
+    .about-content{padding:3rem 1.5rem}
+    .products-grid{grid-template-columns:1fr 1fr}
+    .steps{grid-template-columns:1fr 1fr}
+    .reviews-grid{grid-template-columns:1fr}
+    .cta-section{grid-template-columns:1fr}
+    footer{flex-direction:column;gap:1.5rem;text-align:center}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">LUMINAE</div>
+  <ul class="nav-links">
+    <li><a href="#about">Philosophy</a></li>
+    <li><a href="#products">Collection</a></li>
+    <li><a href="#ritual">Ritual</a></li>
+  </ul>
+  <a href="#cta" class="nav-cta">Shop Now</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <p class="hero-tag">Botanical Skincare — Est. 2021</p>
+    <h1 class="hero-title">Skin that<br><em>glows</em> from<br>within.</h1>
+    <p class="hero-sub">Luminae is a ritual, not a routine. Formulated with rare botanicals and ancient wisdom, every drop is designed to restore your skin's natural radiance.</p>
+    <div class="hero-actions">
+      <a href="#products" class="btn-primary">Discover the Collection</a>
+      <a href="#ritual" class="btn-ghost">See the ritual →</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="bg-skin1" style="width:100%;height:100%;position:relative">
+      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center">
+        <div style="text-align:center;color:rgba(255,255,255,.25);font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-style:italic">Luminae Serum</div>
+      </div>
+    </div>
+    <div class="hero-img-overlay"></div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item">Botanical Science</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Cruelty Free</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Dermatologist Tested</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Sustainably Sourced</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Zero Parabens</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Botanical Science</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Cruelty Free</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Dermatologist Tested</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Sustainably Sourced</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Zero Parabens</span><span class="marquee-dot">·</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-img-wrap">
+    <div class="bg-skin2" style="width:100%;height:100%;min-height:500px;display:flex;align-items:center;justify-content:center">
+      <span style="font-family:'Cormorant Garamond',serif;font-style:italic;color:rgba(255,255,255,.25);font-size:1.1rem">Our philosophy</span>
+    </div>
+  </div>
+  <div class="about-content reveal">
+    <p class="section-label">Our Philosophy</p>
+    <h2 class="section-title">Less product.<br>More intention.</h2>
+    <p class="section-body">We believe your skin doesn't need more — it needs better. Every Luminae formula is a concentrated act of care, built with ingredients that work in harmony with your biology, not against it.</p>
+    <p class="section-body">No fillers. No compromise. Just honest science and genuine botanicals.</p>
+    <div class="stat-row">
+      <div class="stat-item">
+        <div class="stat-num">47</div>
+        <div class="stat-label">Active botanicals</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">0</div>
+        <div class="stat-label">Toxic fillers</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">3yr</div>
+        <div class="stat-label">R&D per formula</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="products" id="products">
+  <div class="products-header reveal">
+    <div>
+      <p class="section-label">The Collection</p>
+      <h2 class="section-title" style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3vw,2.8rem);font-weight:300">Everything your skin is asking for.</h2>
+    </div>
+    <a href="#" class="btn-primary" style="white-space:nowrap">View All →</a>
+  </div>
+  <div class="products-grid reveal">
+    <div class="product-card">
+      <div class="product-img-wrap">
+        <div class="bg-skin3" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center">
+          <span style="font-family:'Cormorant Garamond',serif;font-style:italic;color:rgba(255,255,255,.3)">Serum I</span>
+        </div>
+      </div>
+      <div class="product-info">
+        <div class="product-name">Gold Elixir Serum</div>
+        <div class="product-desc">24k botanicals meet hyaluronic acid for all-day luminosity and deep hydration.</div>
+        <div class="product-price">$84.00</div>
+        <a href="#" class="product-btn">Add to Cart</a>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-img-wrap">
+        <div class="bg-skin4" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center">
+          <span style="font-family:'Cormorant Garamond',serif;font-style:italic;color:rgba(180,140,100,.5)">Cream II</span>
+        </div>
+      </div>
+      <div class="product-info">
+        <div class="product-name">Velvet Moisture Cream</div>
+        <div class="product-desc">Rich ceramide barrier cream that locks moisture in and keeps irritants out.</div>
+        <div class="product-price">$68.00</div>
+        <a href="#" class="product-btn">Add to Cart</a>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-img-wrap">
+        <div class="bg-skin5" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center">
+          <span style="font-family:'Cormorant Garamond',serif;font-style:italic;color:rgba(255,255,255,.3)">Mask III</span>
+        </div>
+      </div>
+      <div class="product-info">
+        <div class="product-name">Obsidian Clarity Mask</div>
+        <div class="product-desc">Volcanic clay and AHA complex for a deep reset — visible results in 15 minutes.</div>
+        <div class="product-price">$56.00</div>
+        <a href="#" class="product-btn">Add to Cart</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RITUAL -->
+<section class="ritual" id="ritual">
+  <p class="ritual-label reveal">The Luminae Method</p>
+  <h2 class="ritual-title reveal">A four-step ritual for <em>radiant</em> skin.</h2>
+  <p class="ritual-sub reveal">Skip the 12-step routines. Our method is built around four intentional steps — each one essential, nothing wasted.</p>
+  <a href="#products" class="btn-primary reveal" style="background:var(--gold);border:none;display:inline-block">Start Your Ritual</a>
+  <div class="steps reveal">
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-title">Cleanse</div>
+      <div class="step-desc">Remove impurities without stripping your skin's natural oils.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-title">Treat</div>
+      <div class="step-desc">Apply targeted serum to address your specific skin concern.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-title">Restore</div>
+      <div class="step-desc">Lock in actives with our barrier-rebuilding moisture cream.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <div class="step-title">Protect</div>
+      <div class="step-desc">SPF barrier to defend your results from daily environmental stress.</div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="reviews">
+  <div class="testimonials-header reveal">
+    <p class="section-label">Real Results</p>
+    <h2 class="section-title" style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3vw,2.8rem);font-weight:300;max-width:500px;margin:0 auto">What our community is saying.</h2>
+  </div>
+  <div class="reviews-grid reveal">
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">"I've tried every luxury serum on the market. Nothing comes close to the Gold Elixir. My skin looks genuinely different."</p>
+      <div class="review-author">— Sofia M., Amsterdam</div>
+    </div>
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">"Three weeks in and my hyperpigmentation has visibly faded. I actually get compliments on my skin now, which has never happened before."</p>
+      <div class="review-author">— Priya K., London</div>
+    </div>
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">"The packaging alone made me feel special. But the results made me a customer for life. Worth every penny."</p>
+      <div class="review-author">— Camille R., Paris</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA / EMAIL SIGNUP -->
+<section class="cta-section" id="cta">
+  <div class="reveal">
+    <p class="section-label" style="color:var(--dark)">Join the Ritual</p>
+    <h2 class="cta-title">Get <em>15% off</em><br>your first order.</h2>
+  </div>
+  <div class="cta-right reveal">
+    <p style="font-size:.85rem;line-height:1.7;color:rgba(28,24,20,.65)">Join 40,000+ members who get early access to new formulas, exclusive rituals, and real skincare education.</p>
+    <input type="email" class="cta-input" placeholder="Your email address">
+    <button class="btn-dark">Claim My 15% Off</button>
+    <p class="cta-note">No spam. Unsubscribe anytime. We take privacy seriously.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">LUMINAE</div>
+  <ul class="footer-links">
+    <li><a href="#">Privacy</a></li>
+    <li><a href="#">Terms</a></li>
+    <li><a href="#">Contact</a></li>
+    <li><a href="#">Instagram</a></li>
+  </ul>
+  <div>© 2025 Luminae. All rights reserved.</div>
+</footer>
+
+<script>
+const reveals=document.querySelectorAll('.reveal');
+const obs=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}
+  })
+},{threshold:.12});
+reveals.forEach(r=>obs.observe(r));
+</script>
+</body>
+</html>
