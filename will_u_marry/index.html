@@ -331,6 +331,29 @@
     margin-top: 0.5rem;
   }
 
+  /* Video */
+  .video-wrapper {
+    margin: 1.5rem auto 0.5rem;
+    max-width: 400px;
+    width: 100%;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 3px solid var(--blush);
+    box-shadow: 0 8px 30px rgba(192,68,107,0.2);
+    background: #000;
+  }
+  .video-wrapper video {
+    width: 100%;
+    display: block;
+    border-radius: 17px;
+  }
+  .video-label {
+    font-size: 0.82rem;
+    color: #bbb;
+    font-style: italic;
+    margin-bottom: 0.5rem;
+  }
+
   /* Responsive */
   @media (max-width: 480px) {
     h1 { font-size: 1.9rem; }
@@ -420,7 +443,14 @@
       Pearl, I promise to love you every single day — including the days when we argue about the temperature of the AC, the days I steal your blanket, and every chaotic, beautiful, ordinary day in between.<br><br>
       <strong style="color: var(--deep-rose);">You're my favorite adventure. 💍</strong>
     </p>
-    <div style="font-size: 2.5rem; letter-spacing: 0.3rem; margin-top: 0.5rem;">
+    <p class="video-label">He has something to say... 🎬</p>
+    <div class="video-wrapper">
+      <video id="proposal-video" controls autoplay playsinline>
+        <source src="me_vid.mp4" type="video/mp4">
+        Your browser doesn't support video. But she said yes anyway! 🎉
+      </video>
+    </div>
+    <div style="font-size: 2.5rem; letter-spacing: 0.3rem; margin-top: 1rem;">
       🌹💍🥂✨🎊
     </div>
     <div class="nav-dots" style="justify-content:center; margin-top:1.5rem;">
