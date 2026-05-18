@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pearl, I have a very important question...</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --blush: #f9c6c9;
+    --rose: #e8728a;
+    --deep-rose: #c0446b;
+    --cream: #fff8f0;
+    --gold: #e0a84b;
+    --dark: #3b1f2b;
+    --soft: #f2dde6;
+  }
+
+  body {
+    font-family: 'Quicksand', sans-serif;
+    background: var(--cream);
+    color: var(--dark);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Floating hearts background */
+  .hearts-bg {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .heart-float {
+    position: absolute;
+    animation: floatUp linear infinite;
+    opacity: 0.15;
+    font-size: 1.2rem;
+  }
+
+  @keyframes floatUp {
+    0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.2; }
+    90% { opacity: 0.15; }
+    100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+  }
+
+  /* Pages */
+  .page {
+    display: none;
+    min-height: 100vh;
+    position: relative;
+    z-index: 1;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 2rem;
+  }
+  .page.active { display: flex; }
+
+  /* Page 1 - Intro */
+  .intro-card {
+    background: white;
+    border-radius: 32px;
+    padding: 3rem 2.5rem;
+    max-width: 520px;
+    width: 100%;
+    box-shadow: 0 8px 60px rgba(192, 68, 107, 0.12);
+    border: 2px solid var(--blush);
+    animation: popIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  @keyframes popIn {
+    0% { transform: scale(0.7); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  .pearl-emoji {
+    font-size: 5rem;
+    display: block;
+    margin-bottom: 1rem;
+    animation: wobble 2s ease-in-out infinite;
+  }
+
+  @keyframes wobble {
+    0%, 100% { transform: rotate(-5deg) scale(1); }
+    50% { transform: rotate(5deg) scale(1.05); }
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.4rem;
+    color: var(--deep-rose);
+    line-height: 1.2;
+    margin-bottom: 0.75rem;
+  }
+
+  h1 em { font-style: italic; color: var(--gold); }
+
+  .subtitle {
+    font-size: 1rem;
+    color: #888;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 0.9rem 2.4rem;
+    border-radius: 50px;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 600;
+    font-size: 1.05rem;
+    cursor: pointer;
+    border: none;
+    transition: transform 0.15s, box-shadow 0.15s;
+    text-decoration: none;
+  }
+  .btn:hover { transform: scale(1.06) translateY(-2px); }
+  .btn:active { transform: scale(0.97); }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--rose), var(--deep-rose));
+    color: white;
+    box-shadow: 0 6px 24px rgba(192,68,107,0.35);
+  }
+
+  /* Page 2 - Reasons */
+  .reasons-card {
+    background: white;
+    border-radius: 32px;
+    padding: 2.5rem;
+    max-width: 560px;
+    width: 100%;
+    box-shadow: 0 8px 60px rgba(192, 68, 107, 0.12);
+    border: 2px solid var(--blush);
+    animation: slideUp 0.5s ease;
+  }
+
+  @keyframes slideUp {
+    from { transform: translateY(40px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  .reasons-list {
+    list-style: none;
+    text-align: left;
+    margin: 1.5rem 0;
+  }
+  .reasons-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--soft);
+    font-size: 0.97rem;
+    line-height: 1.5;
+    color: var(--dark);
+  }
+  .reasons-list li:last-child { border: none; }
+  .reason-icon { font-size: 1.3rem; flex-shrink: 0; }
+
+  /* Page 3 - THE question */
+  .question-card {
+    background: white;
+    border-radius: 32px;
+    padding: 3rem 2.5rem 2.5rem;
+    max-width: 520px;
+    width: 100%;
+    box-shadow: 0 8px 60px rgba(192, 68, 107, 0.18);
+    border: 2px solid var(--blush);
+    animation: popIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .ring-emoji {
+    font-size: 5rem;
+    display: block;
+    margin-bottom: 0.5rem;
+    animation: spin 3s ease-in-out infinite;
+  }
+
+  @keyframes spin {
+    0%, 100% { transform: rotateY(0deg); }
+    50% { transform: rotateY(180deg); }
+  }
+
+  .the-question {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8rem;
+    color: var(--deep-rose);
+    margin-bottom: 0.5rem;
+    line-height: 1.1;
+  }
+
+  .question-sub {
+    font-size: 0.88rem;
+    color: #aaa;
+    margin-bottom: 2rem;
+    font-style: italic;
+  }
+
+  .buttons-row {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    position: relative;
+  }
+
+  .btn-yes {
+    background: linear-gradient(135deg, #67d68d, #2ea85a);
+    color: white;
+    box-shadow: 0 6px 24px rgba(46, 168, 90, 0.4);
+    font-size: 1.2rem;
+    padding: 1rem 2.8rem;
+    animation: heartbeat 1.2s ease-in-out infinite;
+  }
+
+  @keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    25% { transform: scale(1.06); }
+    50% { transform: scale(1); }
+    75% { transform: scale(1.04); }
+  }
+
+  .btn-no {
+    background: white;
+    color: #ccc;
+    border: 2px solid #eee;
+    font-size: 0.95rem;
+    padding: 0.9rem 2rem;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.1s;
+  }
+
+  .no-disclaimer {
+    font-size: 0.72rem;
+    color: #ccc;
+    margin-top: 1rem;
+    font-style: italic;
+  }
+
+  /* Page 4 - SHE SAID YES */
+  .yes-card {
+    background: white;
+    border-radius: 32px;
+    padding: 3rem 2.5rem;
+    max-width: 540px;
+    width: 100%;
+    box-shadow: 0 8px 80px rgba(192, 68, 107, 0.2);
+    border: 3px solid var(--gold);
+    animation: popIn 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .celebration {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    display: block;
+    animation: bounce 0.6s ease-in-out infinite alternate;
+  }
+
+  @keyframes bounce {
+    from { transform: translateY(0); }
+    to { transform: translateY(-14px); }
+  }
+
+  .yes-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    background: linear-gradient(135deg, var(--deep-rose), var(--gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1rem;
+  }
+
+  .yes-msg {
+    font-size: 1.05rem;
+    color: #777;
+    line-height: 1.7;
+    max-width: 380px;
+    margin: 0 auto 1.5rem;
+  }
+
+  /* No button mischief messages */
+  #no-msg {
+    font-size: 0.82rem;
+    color: var(--rose);
+    margin-top: 0.8rem;
+    min-height: 1.2em;
+    font-weight: 600;
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Confetti canvas */
+  #confetti-canvas {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  /* Navigation dots */
+  .nav-dots {
+    display: flex;
+    gap: 8px;
+    margin-top: 1.5rem;
+  }
+  .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--blush);
+    transition: background 0.3s;
+  }
+  .dot.active { background: var(--rose); }
+
+  .progress-label {
+    font-size: 0.75rem;
+    color: #bbb;
+    margin-top: 0.5rem;
+  }
+
+  /* Responsive */
+  @media (max-width: 480px) {
+    h1 { font-size: 1.9rem; }
+    .the-question { font-size: 2.2rem; }
+    .intro-card, .reasons-card, .question-card, .yes-card { padding: 2rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Floating hearts -->
+<div class="hearts-bg" id="hearts-bg"></div>
+
+<!-- Confetti -->
+<canvas id="confetti-canvas"></canvas>
+
+<!-- PAGE 1: Intro -->
+<div class="page active" id="page-1">
+  <div class="intro-card">
+    <span class="pearl-emoji">🌸</span>
+    <h1>Hey <em>Pearl</em>...</h1>
+    <p class="subtitle">I need to show you something.<br>It's kind of important.<br>(Okay, it's very important. Please don't panic.)</p>
+    <button class="btn btn-primary" onclick="goTo(2)">Okay... show me 👀</button>
+    <div class="nav-dots" style="justify-content:center; margin-top:1.5rem;">
+      <div class="dot active"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+    <p class="progress-label">Step 1 of 4 — No going back now</p>
+  </div>
+</div>
+
+<!-- PAGE 2: Reasons -->
+<div class="page" id="page-2">
+  <div class="reasons-card">
+    <h1 style="font-size:1.9rem; margin-bottom:0.25rem;">A few totally<br><em>unbiased</em> reasons...</h1>
+    <p class="subtitle" style="margin-bottom:0;">...why I think we should be together forever.</p>
+    <ul class="reasons-list">
+      <li><span class="reason-icon">😂</span> You laugh at my jokes even when they're terrible, which means you either love me or have very low standards. Either works.</li>
+      <li><span class="reason-icon">🧠</span> You're the smart one in this relationship, which means our future kids will actually have a shot.</li>
+      <li><span class="reason-icon">🍕</span> We never fight about what to eat... okay we do, but we always figure it out eventually.</li>
+      <li><span class="reason-icon">🌙</span> You make ordinary days feel like something worth remembering.</li>
+      <li><span class="reason-icon">💎</span> You're a Pearl — literally rare, genuinely precious, and impossible to find twice.</li>
+      <li><span class="reason-icon">🤝</span> I did extensive research and after years of data collection, you are, objectively, my favorite person.</li>
+    </ul>
+    <button class="btn btn-primary" onclick="goTo(3)">Okay where is this going... 💭</button>
+    <div class="nav-dots" style="justify-content:center; margin-top:1.5rem;">
+      <div class="dot"></div>
+      <div class="dot active"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+    <p class="progress-label">Step 2 of 4 — We're getting there</p>
+  </div>
+</div>
+
+<!-- PAGE 3: THE Question -->
+<div class="page" id="page-3">
+  <div class="question-card">
+    <span class="ring-emoji">💍</span>
+    <h2 class="the-question">Will you marry me?</h2>
+    <p class="question-sub">(I practiced this 47 times. I'm still nervous.)</p>
+    <div class="buttons-row">
+      <button class="btn btn-yes" onclick="sayYes()">YES! 💍❤️</button>
+      <button class="btn btn-no" id="no-btn" onmouseover="moveNoBtn()" onclick="noClicked()">No</button>
+    </div>
+    <p id="no-msg"></p>
+    <p class="no-disclaimer">* The "No" button has been legally advised not to function correctly.</p>
+    <div class="nav-dots" style="justify-content:center; margin-top:1.5rem;">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot active"></div>
+      <div class="dot"></div>
+    </div>
+    <p class="progress-label">Step 3 of 4 — The big moment</p>
+  </div>
+</div>
+
+<!-- PAGE 4: YES! -->
+<div class="page" id="page-4">
+  <div class="yes-card">
+    <span class="celebration">🎉</span>
+    <h2 class="yes-title">She said YES!!!</h2>
+    <p class="yes-msg">
+      I knew it. The algorithm never lies.<br><br>
+      Pearl, I promise to love you every single day — including the days when we argue about the temperature of the AC, the days I steal your blanket, and every chaotic, beautiful, ordinary day in between.<br><br>
+      <strong style="color: var(--deep-rose);">You're my favorite adventure. 💍</strong>
+    </p>
+    <div style="font-size: 2.5rem; letter-spacing: 0.3rem; margin-top: 0.5rem;">
+      🌹💍🥂✨🎊
+    </div>
+    <div class="nav-dots" style="justify-content:center; margin-top:1.5rem;">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot active"></div>
+    </div>
+    <p class="progress-label">Step 4 of 4 — The best step 🎉</p>
+  </div>
+</div>
+
+<script>
+// --- Floating hearts ---
+const hbg = document.getElementById('hearts-bg');
+const emojis = ['❤️','💗','💕','💖','✨','🌸','💝','💞'];
+for (let i = 0; i < 18; i++) {
+  const h = document.createElement('div');
+  h.className = 'heart-float';
+  h.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+  h.style.left = Math.random() * 100 + 'vw';
+  h.style.animationDuration = (8 + Math.random() * 14) + 's';
+  h.style.animationDelay = (Math.random() * 10) + 's';
+  h.style.fontSize = (0.8 + Math.random() * 1.2) + 'rem';
+  hbg.appendChild(h);
+}
+
+// --- Page navigation ---
+function goTo(n) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + n).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+// --- No button mischief ---
+const noMessages = [
+  "Lol, nice try.",
+  "That button doesn't do what you think it does. 😄",
+  "Hmm. The button seems to be broken. Please try YES instead.",
+  "Our WiFi is down. Please select YES.",
+  "ERROR 404: 'No' not found.",
+  "I'm sorry, that option has been discontinued.",
+  "Did you mean... YES? 💍",
+  "The 'No' button is on vacation. Forever.",
+  "Sir/Ma'am this is a YES-only establishment.",
+  "I've contacted support. They also said YES.",
+  "The Supreme Court has ruled: YES only.",
+  "I consulted Google. Still YES.",
+  "That button is decorative. Like a throw pillow.",
+  "Plot twist: 'No' means YES in this universe.",
+  "⚠️ Warning: clicking No summons more love. ⚠️",
+];
+let noCount = 0;
+
+function moveNoBtn() {
+  const btn = document.getElementById('no-btn');
+  const card = document.querySelector('#page-3 .question-card');
+  const cardRect = card.getBoundingClientRect();
+  const btnRect = btn.getBoundingClientRect();
+  const maxX = cardRect.width - btnRect.width - 40;
+  const maxY = 60;
+  const rx = Math.floor(Math.random() * maxX - maxX/2);
+  const ry = Math.floor(Math.random() * maxY * 2 - maxY);
+  btn.style.transform = `translate(${rx}px, ${ry}px)`;
+  btn.style.transition = 'transform 0.15s';
+}
+
+function noClicked() {
+  const msg = document.getElementById('no-msg');
+  msg.textContent = noMessages[noCount % noMessages.length];
+  msg.style.animation = 'none';
+  void msg.offsetWidth;
+  msg.style.animation = 'fadeIn 0.3s ease';
+  noCount++;
+  moveNoBtn();
+}
+
+// --- YES! ---
+function sayYes() {
+  goTo(4);
+  launchConfetti();
+}
+
+// --- Confetti ---
+function launchConfetti() {
+  const canvas = document.getElementById('confetti-canvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const colors = ['#f9c6c9','#e8728a','#c0446b','#e0a84b','#67d68d','#fff','#a78bfa'];
+  const pieces = Array.from({length: 140}, () => ({
+    x: Math.random() * canvas.width,
+    y: Math.random() * -canvas.height,
+    w: 8 + Math.random() * 8,
+    h: 4 + Math.random() * 4,
+    color: colors[Math.floor(Math.random() * colors.length)],
+    rot: Math.random() * Math.PI * 2,
+    rotSpeed: (Math.random() - 0.5) * 0.15,
+    vy: 2 + Math.random() * 4,
+    vx: (Math.random() - 0.5) * 2,
+    alpha: 1,
+  }));
+
+  let frame = 0;
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    pieces.forEach(p => {
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot);
+      ctx.globalAlpha = p.alpha;
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+      ctx.restore();
+      p.y += p.vy;
+      p.x += p.vx;
+      p.rot += p.rotSpeed;
+      if (p.y > canvas.height + 20) {
+        p.y = -20;
+        p.x = Math.random() * canvas.width;
+      }
+    });
+    frame++;
+    if (frame < 400) requestAnimationFrame(draw);
+    else ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+  draw();
+}
+</script>
+</body>
+</html>
