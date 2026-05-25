@@ -1,0 +1,1778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Little Red Riding Hood 🌟</title>
+<link href="https://fonts.googleapis.com/css2?family=Bubblegum+Sans&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #e63946;
+    --warm-red: #ff6b6b;
+    --forest: #2d6a4f;
+    --forest-light: #52b788;
+    --sky: #a8dadc;
+    --yellow: #ffd166;
+    --brown: #8b5e3c;
+    --cream: #fff8f0;
+    --shadow: rgba(0,0,0,0.15);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--cream);
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+  }
+
+  /* ===== SCREENS ===== */
+  .screen {
+    position: absolute;
+    inset: 0;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .screen.active { display: flex; }
+
+  /* ===== LANDING PAGE ===== */
+  #landing {
+    background: linear-gradient(160deg, #a8dadc 0%, #d4f1c4 40%, #f9e4b7 100%);
+    overflow: hidden;
+  }
+
+  .forest-bg {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 45%;
+    background: linear-gradient(to top, #1b4332, #2d6a4f, #52b788);
+    clip-path: polygon(0 40%, 5% 20%, 10% 35%, 15% 10%, 20% 28%, 25% 5%, 30% 22%, 35% 8%, 40% 25%, 45% 12%, 50% 30%, 55% 10%, 60% 28%, 65% 15%, 70% 32%, 75% 8%, 80% 25%, 85% 12%, 90% 30%, 95% 18%, 100% 35%, 100% 100%, 0 100%);
+  }
+
+  .sun {
+    position: absolute;
+    top: 8%; right: 12%;
+    width: 90px; height: 90px;
+    background: radial-gradient(circle, #ffe566, #ffd166);
+    border-radius: 50%;
+    box-shadow: 0 0 40px #ffd16688;
+    animation: sunPulse 3s ease-in-out infinite;
+  }
+
+  @keyframes sunPulse {
+    0%, 100% { transform: scale(1); box-shadow: 0 0 40px #ffd16688; }
+    50% { transform: scale(1.08); box-shadow: 0 0 60px #ffd166bb; }
+  }
+
+  .cloud {
+    position: absolute;
+    background: white;
+    border-radius: 50px;
+    opacity: 0.85;
+    animation: cloudFloat linear infinite;
+  }
+  .cloud::before, .cloud::after {
+    content: '';
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+  }
+  .cloud1 { width: 120px; height: 38px; top: 12%; left: -130px; animation-duration: 22s; }
+  .cloud1::before { width: 55px; height: 55px; top: -25px; left: 20px; }
+  .cloud1::after { width: 40px; height: 40px; top: -18px; left: 55px; }
+  .cloud2 { width: 90px; height: 28px; top: 22%; left: -100px; animation-duration: 30s; animation-delay: -10s; }
+  .cloud2::before { width: 40px; height: 40px; top: -18px; left: 15px; }
+  .cloud2::after { width: 30px; height: 30px; top: -12px; left: 42px; }
+
+  @keyframes cloudFloat {
+    from { transform: translateX(0); }
+    to { transform: translateX(calc(100vw + 200px)); }
+  }
+
+  .landing-hero {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+
+  .landing-hero h1 {
+    font-family: 'Bubblegum Sans', cursive;
+    font-size: clamp(2.2rem, 6vw, 4rem);
+    color: var(--red);
+    text-shadow: 3px 3px 0 #fff, 5px 5px 0 rgba(0,0,0,0.1);
+    line-height: 1.1;
+    margin-bottom: 8px;
+    animation: titleBounce 0.8s cubic-bezier(0.34,1.56,0.64,1) both;
+  }
+
+  .landing-hero .subtitle {
+    font-size: 1rem;
+    color: var(--forest);
+    font-weight: 700;
+    background: rgba(255,255,255,0.8);
+    padding: 6px 18px;
+    border-radius: 20px;
+    display: inline-block;
+    animation: fadeUp 0.8s 0.3s both;
+  }
+
+  @keyframes titleBounce {
+    from { transform: scale(0) rotate(-5deg); opacity: 0; }
+    to { transform: scale(1) rotate(0); opacity: 1; }
+  }
+  @keyframes fadeUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  .landing-character {
+    position: relative;
+    z-index: 10;
+    font-size: clamp(80px, 15vw, 130px);
+    animation: characterFloat 3s ease-in-out infinite, fadeUp 0.8s 0.5s both;
+    cursor: pointer;
+    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.2));
+  }
+
+  @keyframes characterFloat {
+    0%, 100% { transform: translateY(0) rotate(-2deg); }
+    50% { transform: translateY(-12px) rotate(2deg); }
+  }
+
+  .instructions-box {
+    position: relative;
+    z-index: 10;
+    background: rgba(255,255,255,0.92);
+    border-radius: 20px;
+    padding: 16px 24px;
+    max-width: 480px;
+    width: 90%;
+    border: 3px solid var(--yellow);
+    box-shadow: 0 8px 30px var(--shadow);
+    animation: fadeUp 0.8s 0.6s both;
+    margin-bottom: 20px;
+  }
+
+  .instructions-box h3 {
+    font-family: 'Bubblegum Sans', cursive;
+    color: var(--forest);
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .instructions-box ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .instructions-box li {
+    font-size: 0.82rem;
+    color: #444;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-weight: 600;
+  }
+
+  .instructions-box li span.icon {
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  .start-btn {
+    position: relative;
+    z-index: 10;
+    background: linear-gradient(135deg, var(--red), #c1121f);
+    color: white;
+    border: none;
+    padding: 16px 48px;
+    border-radius: 50px;
+    font-family: 'Bubblegum Sans', cursive;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: 0 6px 0 #8b0000, 0 10px 25px rgba(230,57,70,0.4);
+    transition: all 0.15s;
+    animation: fadeUp 0.8s 0.8s both;
+    letter-spacing: 1px;
+  }
+  .start-btn:hover { transform: translateY(-3px); box-shadow: 0 9px 0 #8b0000, 0 14px 30px rgba(230,57,70,0.4); }
+  .start-btn:active { transform: translateY(3px); box-shadow: 0 3px 0 #8b0000; }
+
+  /* ===== STORY SCREEN ===== */
+  #story {
+    background: var(--cream);
+    flex-direction: column;
+  }
+
+  .story-header {
+    width: 100%;
+    background: linear-gradient(135deg, var(--red), #c1121f);
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.15);
+    flex-shrink: 0;
+    z-index: 20;
+  }
+
+  .story-title {
+    font-family: 'Bubblegum Sans', cursive;
+    color: white;
+    font-size: 1.2rem;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+  }
+
+  .progress-bar-wrap {
+    flex: 1;
+    margin: 0 16px;
+    height: 12px;
+    background: rgba(255,255,255,0.3);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    background: var(--yellow);
+    border-radius: 10px;
+    transition: width 0.5s ease;
+    box-shadow: 0 0 8px rgba(255,209,102,0.6);
+  }
+
+  .page-indicator {
+    font-family: 'Bubblegum Sans', cursive;
+    color: white;
+    font-size: 0.9rem;
+    white-space: nowrap;
+  }
+
+  .story-content {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s, transform 0.5s;
+    transform: translateX(60px);
+  }
+  .slide.active {
+    opacity: 1;
+    pointer-events: all;
+    transform: translateX(0);
+  }
+  .slide.exit {
+    opacity: 0;
+    transform: translateX(-60px);
+  }
+
+  .slide-image-area {
+    flex: 1;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .slide-bg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* SVG Scenes */
+  .scene-svg {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0; left: 0;
+  }
+
+  .clickable-char {
+    cursor: pointer;
+    transition: transform 0.2s;
+    transform-origin: center bottom;
+  }
+  .clickable-char:hover { transform: scale(1.05); }
+  .clickable-char.bounce {
+    animation: charBounce 0.6s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  @keyframes charBounce {
+    0% { transform: scale(1) translateY(0); }
+    30% { transform: scale(1.15) translateY(-18px); }
+    60% { transform: scale(0.95) translateY(4px); }
+    100% { transform: scale(1) translateY(0); }
+  }
+
+  .speech-bubble {
+    position: absolute;
+    background: white;
+    border: 3px solid var(--yellow);
+    border-radius: 18px;
+    padding: 10px 16px;
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: #333;
+    max-width: 180px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    z-index: 50;
+    pointer-events: none;
+    animation: bubblePop 0.4s cubic-bezier(0.34,1.56,0.64,1) both;
+    font-family: 'Bubblegum Sans', cursive;
+  }
+  .speech-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -12px;
+    left: 20px;
+    border: 10px solid transparent;
+    border-top-color: white;
+    border-bottom: none;
+  }
+  .speech-bubble::before {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 17px;
+    border: 11px solid transparent;
+    border-top-color: var(--yellow);
+    border-bottom: none;
+    z-index: -1;
+  }
+  @keyframes bubblePop {
+    from { transform: scale(0); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  .slide-text-area {
+    width: 100%;
+    background: white;
+    padding: 12px 20px 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-top: 3px solid var(--sky);
+    flex-shrink: 0;
+    box-shadow: 0 -3px 15px rgba(0,0,0,0.08);
+  }
+
+  .story-text {
+    flex: 1;
+    font-size: clamp(0.82rem, 2.2vw, 1rem);
+    color: #333;
+    line-height: 1.6;
+    font-weight: 700;
+  }
+
+  .read-btn {
+    background: var(--forest-light);
+    border: none;
+    border-radius: 50%;
+    width: 42px; height: 42px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: all 0.2s;
+    box-shadow: 0 3px 0 var(--forest);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .read-btn:hover { transform: scale(1.1); }
+  .read-btn.reading { background: var(--yellow); animation: readPulse 1s infinite; }
+  @keyframes readPulse { 0%,100% { box-shadow: 0 3px 0 var(--forest), 0 0 0 0 rgba(255,209,102,0.4); } 50% { box-shadow: 0 3px 0 var(--forest), 0 0 0 8px rgba(255,209,102,0); } }
+
+  /* NAV BUTTONS */
+  .story-nav {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 16px;
+    background: var(--cream);
+    flex-shrink: 0;
+    border-top: 2px solid #f0e0cc;
+  }
+
+  .nav-btn {
+    background: var(--red);
+    color: white;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 50px;
+    font-family: 'Bubblegum Sans', cursive;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 4px 0 #8b0000;
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .nav-btn:hover { transform: translateY(-2px); }
+  .nav-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 #8b0000; }
+  .nav-btn:disabled { background: #ccc; box-shadow: 0 4px 0 #aaa; cursor: not-allowed; transform: none; }
+  .nav-btn.next { background: var(--forest); box-shadow: 0 4px 0 #1b4332; }
+  .nav-btn.next:hover { transform: translateY(-2px); }
+
+  /* ===== QUIZ SCREEN ===== */
+  #quiz {
+    background: linear-gradient(135deg, #a8dadc 0%, #d4f1c4 100%);
+    padding: 20px;
+    overflow-y: auto;
+  }
+
+  .quiz-card {
+    background: white;
+    border-radius: 24px;
+    padding: 28px 24px;
+    max-width: 520px;
+    width: 100%;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.12);
+    border: 3px solid var(--yellow);
+    animation: cardIn 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
+  }
+  @keyframes cardIn {
+    from { transform: scale(0.8) translateY(30px); opacity: 0; }
+    to { transform: scale(1) translateY(0); opacity: 1; }
+  }
+
+  .quiz-emoji { font-size: 2.5rem; text-align: center; margin-bottom: 8px; }
+
+  .quiz-label {
+    font-family: 'Bubblegum Sans', cursive;
+    color: var(--red);
+    font-size: 0.85rem;
+    text-align: center;
+    margin-bottom: 6px;
+    background: #ffe8ea;
+    padding: 4px 12px;
+    border-radius: 20px;
+    display: inline-block;
+  }
+
+  .quiz-question {
+    font-family: 'Bubblegum Sans', cursive;
+    font-size: clamp(1rem, 3vw, 1.3rem);
+    color: #222;
+    margin: 10px 0 18px;
+    line-height: 1.4;
+    text-align: center;
+  }
+
+  .quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .quiz-option {
+    background: #f8f4ff;
+    border: 3px solid #e0d4ff;
+    border-radius: 16px;
+    padding: 12px 18px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Nunito', sans-serif;
+  }
+  .quiz-option:hover:not(:disabled) { background: #ede8ff; border-color: #b39ddb; transform: translateX(4px); }
+  .quiz-option.correct { background: #d4f8e8; border-color: var(--forest-light); color: var(--forest); }
+  .quiz-option.wrong { background: #ffe0e0; border-color: var(--warm-red); color: #c1121f; }
+  .quiz-option:disabled { cursor: default; }
+
+  .option-letter {
+    width: 30px; height: 30px;
+    background: var(--yellow);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Bubblegum Sans', cursive;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+  }
+
+  .quiz-feedback {
+    margin-top: 14px;
+    padding: 12px 16px;
+    border-radius: 14px;
+    font-weight: 800;
+    font-size: 0.95rem;
+    text-align: center;
+    display: none;
+  }
+  .quiz-feedback.show { display: block; }
+  .quiz-feedback.correct-fb { background: #d4f8e8; color: var(--forest); border: 2px solid var(--forest-light); }
+  .quiz-feedback.wrong-fb { background: #ffe0e0; color: #c1121f; border: 2px solid var(--warm-red); }
+
+  .quiz-continue-btn {
+    margin-top: 16px;
+    width: 100%;
+    background: var(--forest);
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 50px;
+    font-family: 'Bubblegum Sans', cursive;
+    font-size: 1.1rem;
+    cursor: pointer;
+    box-shadow: 0 4px 0 #1b4332;
+    display: none;
+    transition: all 0.15s;
+  }
+  .quiz-continue-btn.show { display: block; }
+  .quiz-continue-btn:hover { transform: translateY(-2px); }
+
+  .quiz-back-btn {
+    margin-top: 10px;
+    width: 100%;
+    background: white;
+    color: var(--red);
+    border: 3px solid var(--red);
+    padding: 11px;
+    border-radius: 50px;
+    font-family: 'Bubblegum Sans', cursive;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .quiz-back-btn:hover { background: #fff0f0; transform: translateY(-2px); }
+
+  /* ===== RESULTS SCREEN ===== */
+  #results {
+    background: linear-gradient(160deg, #a8dadc 0%, #d4f1c4 40%, #f9e4b7 100%);
+    padding: 20px;
+    overflow-y: auto;
+  }
+
+  .results-card {
+    background: white;
+    border-radius: 28px;
+    padding: 32px 28px;
+    max-width: 500px;
+    width: 100%;
+    box-shadow: 0 12px 50px rgba(0,0,0,0.15);
+    border: 4px solid var(--yellow);
+    text-align: center;
+    animation: cardIn 0.6s cubic-bezier(0.34,1.56,0.64,1) both;
+  }
+
+  .trophy { font-size: 4rem; margin-bottom: 8px; animation: trophySpin 1s 0.3s both; }
+  @keyframes trophySpin {
+    from { transform: rotate(-20deg) scale(0); }
+    to { transform: rotate(0) scale(1); }
+  }
+
+  .results-title {
+    font-family: 'Bubblegum Sans', cursive;
+    font-size: 2rem;
+    color: var(--red);
+    text-shadow: 2px 2px 0 #ffe0e0;
+    margin-bottom: 6px;
+  }
+
+  .score-display {
+    font-family: 'Bubblegum Sans', cursive;
+    font-size: 3.5rem;
+    color: var(--forest);
+    margin: 10px 0;
+  }
+
+  .score-label {
+    font-size: 0.9rem;
+    color: #666;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+
+  .stars-row {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin: 12px 0;
+    font-size: 2rem;
+  }
+
+  .results-breakdown {
+    margin: 16px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    text-align: left;
+  }
+
+  .breakdown-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.88rem;
+    font-weight: 700;
+    padding: 8px 12px;
+    border-radius: 12px;
+    background: #f8f8f8;
+  }
+  .breakdown-item .bi-icon { font-size: 1.2rem; }
+  .breakdown-item.correct-b { background: #d4f8e8; }
+  .breakdown-item.wrong-b { background: #ffe0e0; }
+
+  .results-message {
+    font-family: 'Bubblegum Sans', cursive;
+    font-size: 1.1rem;
+    color: #555;
+    margin: 12px 0 20px;
+    padding: 12px;
+    background: var(--cream);
+    border-radius: 16px;
+  }
+
+  .results-btns {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .res-btn {
+    padding: 12px 28px;
+    border-radius: 50px;
+    border: none;
+    font-family: 'Bubblegum Sans', cursive;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .res-btn.primary { background: var(--red); color: white; box-shadow: 0 4px 0 #8b0000; }
+  .res-btn.secondary { background: var(--forest-light); color: white; box-shadow: 0 4px 0 var(--forest); }
+  .res-btn:hover { transform: translateY(-2px); }
+
+  /* Floating stars decoration */
+  .floating-stars {
+    position: absolute;
+    pointer-events: none;
+    z-index: 100;
+  }
+  .fstar {
+    position: absolute;
+    font-size: 1.5rem;
+    animation: starFly 1.5s forwards;
+    opacity: 0;
+  }
+  @keyframes starFly {
+    0% { transform: translateY(0) scale(0); opacity: 1; }
+    100% { transform: translateY(-80px) scale(1.3); opacity: 0; }
+  }
+
+  /* Responsive */
+  @media (max-height: 600px) {
+    .landing-character { font-size: 70px; }
+    .instructions-box { padding: 10px 16px; }
+    .instructions-box li { font-size: 0.75rem; }
+    .start-btn { padding: 12px 36px; font-size: 1.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== LANDING PAGE ===== -->
+<div id="landing" class="screen active">
+  <div class="forest-bg"></div>
+  <div class="sun"></div>
+  <div class="cloud cloud1"></div>
+  <div class="cloud cloud2"></div>
+
+  <div class="landing-hero">
+    <h1>🌟 Little Red<br>Riding Hood</h1>
+    <div class="subtitle">✨ An Interactive Storybook ✨</div>
+  </div>
+
+  <div class="landing-character" id="landingChar" onclick="landingCharClick()">🧒🏻</div>
+
+  <div class="instructions-box">
+    <h3>📖 How to Play</h3>
+    <ul>
+      <li><span class="icon">▶️</span> Press <b>Next</b> to go through the story page by page</li>
+      <li><span class="icon">🔊</span> Tap the <b>speaker button</b> to hear the story read aloud</li>
+      <li><span class="icon">👆</span> <b>Click on characters</b> in the pictures — they talk to you!</li>
+      <li><span class="icon">❓</span> Every <b>2 pages</b>, answer a fun question about the story</li>
+      <li><span class="icon">🏆</span> At the end, see your <b>score</b> and try again if you like!</li>
+    </ul>
+  </div>
+
+  <button class="start-btn" onclick="startStory()">📚 Start Reading!</button>
+</div>
+
+<!-- ===== STORY SCREEN ===== -->
+<div id="story" class="screen">
+  <div class="story-header">
+    <div class="story-title">🧒 Little Red Riding Hood</div>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="progressBar" style="width:0%"></div>
+    </div>
+    <div class="page-indicator" id="pageIndicator">Page 1 / 12</div>
+  </div>
+
+  <div class="story-content" id="storyContent">
+    <!-- Slides inserted by JS -->
+  </div>
+
+  <div class="story-nav">
+    <button class="nav-btn" id="prevBtn" onclick="navigate(-1)" disabled>⬅️ Back</button>
+    <button class="nav-btn next" id="nextBtn" onclick="navigate(1)">Next ➡️</button>
+  </div>
+</div>
+
+<!-- ===== QUIZ SCREEN ===== -->
+<div id="quiz" class="screen">
+  <div class="quiz-card" id="quizCard">
+    <div class="quiz-emoji" id="quizEmoji">🤔</div>
+    <div style="text-align:center"><span class="quiz-label" id="quizLabel">Question Time!</span></div>
+    <div class="quiz-question" id="quizQuestion">Loading...</div>
+    <div class="quiz-options" id="quizOptions"></div>
+    <div class="quiz-feedback" id="quizFeedback"></div>
+    <button class="quiz-continue-btn" id="quizContinueBtn" onclick="continueAfterQuiz()">Continue Story ➡️</button>
+    <button class="quiz-back-btn" id="quizBackBtn" onclick="goBackToStory()">📖 Go Back & Re-read the Story</button>
+  </div>
+</div>
+
+<!-- ===== RESULTS SCREEN ===== -->
+<div id="results" class="screen">
+  <div class="results-card">
+    <div class="trophy" id="trophyEmoji">🏆</div>
+    <div class="results-title">Story Complete!</div>
+    <div class="score-display" id="scoreDisplay">0/6</div>
+    <div class="score-label" id="scoreLabel">questions answered correctly</div>
+    <div class="stars-row" id="starsRow"></div>
+    <div class="results-message" id="resultsMessage"></div>
+    <div class="results-breakdown" id="resultsBreakdown"></div>
+    <div class="results-btns">
+      <button class="res-btn primary" onclick="tryAgain()">🔄 Try Again!</button>
+      <button class="res-btn secondary" onclick="startStory()">📖 Read Again</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===== STORY DATA =====
+const slides = [
+  {
+    id: 0,
+    text: "Once upon a time there was a girl called Little Red Riding Hood. She lived with her mother in a village near a forest.",
+    bg: "#c8e6c9",
+    scene: "forest_girl",
+    charName: "Little Red Riding Hood",
+    charSay: ["Hi! I'm Little Red Riding Hood! 👋", "I love visiting Granny! 🧺", "The forest is so pretty! 🌿"],
+  },
+  {
+    id: 1,
+    text: "One day, Little Red Riding Hood went to visit her grandmother. She took a basket of food with her.",
+    bg: "#dcedc8",
+    scene: "basket",
+    charName: "The Basket",
+    charSay: ["I'm full of yummy food! 🧁", "Cupcakes and fruit for Granny! 🍎", "What a lovely picnic! 🧺"],
+  },
+  {
+    id: 2,
+    text: 'On her way, Little Red Riding Hood met a wolf. "Hello," said the wolf. "Where are you going?" "I\'m going to visit my grandmother who lives in the forest," explained Little Red Riding Hood.',
+    bg: "#f0f4c3",
+    scene: "wolf_meet",
+    charName: "The Wolf",
+    charSay: ["Hehe... I have a plan... 🐺", "Where are you going, little girl? 😈", "I'm very sneaky! 🌲"],
+  },
+  {
+    id: 3,
+    text: "The wolf ran to her grandmother's house. He went inside and locked her in the wardrobe! He put on her nightgown and got into her bed.",
+    bg: "#e8f5e9",
+    scene: "granny_house",
+    charName: "The Wolf",
+    charSay: ["Hehe, Granny's bed is cozy! 😏", "No one will notice me... 🐺", "I'm in disguise! 😂"],
+  },
+  {
+    id: 4,
+    text: "A little later, Little Red Riding Hood came to the house. She knocked on the door, then went inside.",
+    bg: "#e1f5fe",
+    scene: "inside_house",
+    charName: "Little Red Riding Hood",
+    charSay: ["Something feels strange... 🤔", "Granny? Are you home? 🏠", "I'll bring you these treats! 🧺"],
+  },
+  {
+    id: 5,
+    text: 'Little Red Riding Hood went over to Grandmother\'s bed. "Oh Granny, what big ears you have," she said. "All the better to hear you with," answered the wolf.',
+    bg: "#e8eaf6",
+    scene: "bed_scene",
+    charName: "The Wolf",
+    charSay: ["All the better to HEAR you with! 👂", "Don't look too closely... 😬", "I'm definitely your Granny! 😅"],
+  },
+  {
+    id: 6,
+    text: '"Oh Granny, what big eyes you have," said Little Red Riding Hood. "All the better to see you with," replied the wolf.',
+    bg: "#e8eaf6",
+    scene: "bed_scene2",
+    charName: "The Wolf",
+    charSay: ["All the better to SEE you with! 👀", "My eyes are perfectly normal! 😈", "Nothing to worry about! 🐺"],
+  },
+  {
+    id: 7,
+    text: '"Oh Granny, what big teeth you have," said Little Red Riding Hood. "All the better to eat you with," said the wolf.',
+    bg: "#fce4ec",
+    scene: "teeth_scene",
+    charName: "The Wolf",
+    charSay: ["RAWR! All the better to EAT you! 🦷", "Surprise! I'm the wolf! 😱", "RUN! 🏃‍♀️"],
+  },
+  {
+    id: 8,
+    text: '"Help!" shouted Little Red Riding Hood as she realised that there was a wolf in her grandmother\'s bed. She ran out of the house.',
+    bg: "#fff8e1",
+    scene: "run_scene",
+    charName: "Little Red Riding Hood",
+    charSay: ["HELP! It's a wolf! 😱", "I must run away fast! 🏃‍♀️", "Someone please help me! 😰"],
+  },
+  {
+    id: 9,
+    text: "A woodcutter was nearby. He heard Little Red Riding Hood's scream and ran to the house.",
+    bg: "#e8f5e9",
+    scene: "woodcutter",
+    charName: "The Woodcutter",
+    charSay: ["Don't worry, I'll save you! 💪", "I heard your scream! 🪓", "Nobody messes with this woodcutter! 😤"],
+  },
+  {
+    id: 10,
+    text: "The woodcutter hit the wolf over the head. The wolf ran away and Little Red Riding Hood never saw him again.",
+    bg: "#f1f8e9",
+    scene: "wolf_runs",
+    charName: "The Woodcutter",
+    charSay: ["That'll teach you, wolf! 🪓", "Everyone is safe now! 😊", "Hooray! The wolf is gone! 🎉"],
+  },
+  {
+    id: 11,
+    text: "And they all lived happily ever after! Little Red Riding Hood and her grandmother were safe and together again. The End! 🌟",
+    bg: "#c8e6c9",
+    scene: "happy_end",
+    charName: "Little Red Riding Hood",
+    charSay: ["Yay! We're safe! 🎉", "Thank you, Mr. Woodcutter! 💕", "The End! I love Granny! 🤗"],
+  },
+];
+
+const quizzes = [
+  {
+    afterSlide: 1, // after page 2 (0-indexed: slides 0 & 1)
+    emoji: "🧺",
+    question: "Where does Little Red Riding Hood live?",
+    options: ["In a cave in the mountains", "In a village near a forest", "In a big city", "Under the sea"],
+    correct: 1,
+    explanation: "That's right! She lived with her mother in a village near a forest! 🌲"
+  },
+  {
+    afterSlide: 3, // after page 4 (slides 2 & 3)
+    emoji: "🐺",
+    question: "What did the wolf do when he reached Grandmother's house?",
+    options: ["He knocked politely and waited", "He went inside and locked Granny in the wardrobe", "He left a note and walked away", "He fell asleep outside"],
+    correct: 1,
+    explanation: "Correct! The sneaky wolf locked Granny in the wardrobe and got into her bed! 😱"
+  },
+  {
+    afterSlide: 5, // after page 6 (slides 4 & 5)
+    emoji: "👂",
+    question: 'When Little Red Riding Hood said "What big ears you have!", what did the wolf reply?',
+    options: ['"All the better to smell you with"', '"All the better to eat you with"', '"All the better to hear you with"', '"I don\'t have big ears!"'],
+    correct: 2,
+    explanation: "Yes! The wolf said 'All the better to hear you with!' 👂"
+  },
+  {
+    afterSlide: 7, // after page 8 (slides 6 & 7)
+    emoji: "🦷",
+    question: "What did the wolf say when Little Red Riding Hood noticed his big teeth?",
+    options: ['"All the better to hear you with"', '"All the better to see you with"', '"All the better to hug you with"', '"All the better to eat you with"'],
+    correct: 3,
+    explanation: "Correct! 'All the better to eat you with!' — that's when she got very scared! 😱"
+  },
+  {
+    afterSlide: 9, // after page 10 (slides 8 & 9)
+    emoji: "🪓",
+    question: "Who came to save Little Red Riding Hood?",
+    options: ["A police officer", "Her mother", "A woodcutter", "A hunter with a gun"],
+    correct: 2,
+    explanation: "That's right! A woodcutter nearby heard her scream and came running! 💪"
+  },
+  {
+    afterSlide: 11, // after last page (slides 10 & 11)
+    emoji: "🎉",
+    question: "How does the story end?",
+    options: ["The wolf wins and runs away with Granny", "Everyone is scared and goes home", "The wolf ran away and everyone was safe and happy", "Little Red Riding Hood never visits Granny again"],
+    correct: 2,
+    explanation: "🎉 Yes! The wolf ran away and they all lived happily ever after!"
+  },
+];
+
+// ===== STATE =====
+let currentSlide = 0;
+let quizScores = [];
+let quizAnswers = [];
+let pendingQuizIdx = -1;
+let speechSynth = window.speechSynthesis;
+let currentUtterance = null;
+let currentReadBtn = null;
+
+// ===== INIT =====
+function buildSlides() {
+  const container = document.getElementById('storyContent');
+  container.innerHTML = '';
+  slides.forEach((slide, i) => {
+    const el = document.createElement('div');
+    el.className = 'slide' + (i === 0 ? ' active' : '');
+    el.id = 'slide_' + i;
+    el.innerHTML = `
+      <div class="slide-image-area" style="background:${slide.bg}">
+        ${buildScene(slide, i)}
+      </div>
+      <div class="slide-text-area">
+        <button class="read-btn" id="readBtn_${i}" onclick="toggleRead(${i})" title="Read aloud">🔊</button>
+        <div class="story-text">${slide.text}</div>
+      </div>
+    `;
+    container.appendChild(el);
+  });
+}
+
+function buildScene(slide, idx) {
+  // SVG scenes with clickable characters
+  const scenes = {
+    forest_girl: `
+      <svg viewBox="0 0 800 320" xmlns="http://www.w3.org/2000/svg" class="scene-svg" style="background:linear-gradient(to bottom,#87ceeb 0%,#c8e6c9 60%,#4caf50 100%)">
+        <!-- Trees -->
+        <rect x="50" y="60" width="25" height="180" fill="#5d4037" rx="4"/>
+        <ellipse cx="62" cy="80" rx="50" ry="70" fill="#2e7d32"/>
+        <rect x="680" y="70" width="25" height="170" fill="#5d4037" rx="4"/>
+        <ellipse cx="692" cy="90" rx="45" ry="65" fill="#388e3c"/>
+        <rect x="140" y="90" width="20" height="150" fill="#6d4c41" rx="3"/>
+        <ellipse cx="150" cy="105" rx="38" ry="55" fill="#43a047"/>
+        <!-- Path -->
+        <ellipse cx="400" cy="310" rx="200" ry="30" fill="#bcaaa4" opacity="0.5"/>
+        <!-- Sun -->
+        <circle cx="680" cy="50" r="40" fill="#ffd166" opacity="0.9"/>
+        <!-- Roses bush -->
+        <ellipse cx="520" cy="240" rx="60" ry="40" fill="#2e7d32"/>
+        <circle cx="500" cy="225" r="12" fill="#e53935"/>
+        <circle cx="520" cy="218" r="10" fill="#ef5350"/>
+        <circle cx="540" cy="228" r="11" fill="#e53935"/>
+        <!-- Character group -->
+        <g class="clickable-char" id="char_${idx}" onclick="charClick(event,${idx})" style="cursor:pointer">
+          <!-- Red cloak -->
+          <ellipse cx="350" cy="260" rx="38" ry="55" fill="#e53935"/>
+          <!-- Body/dress -->
+          <rect x="325" y="210" width="50" height="75" fill="#42a5f5" rx="8"/>
+          <!-- Apron -->
+          <rect x="333" y="230" width="34" height="50" fill="white" rx="6"/>
+          <!-- Red hood -->
+          <ellipse cx="350" cy="185" rx="32" ry="28" fill="#e53935"/>
+          <!-- Face -->
+          <circle cx="350" cy="183" r="22" fill="#ffccbc"/>
+          <!-- Eyes -->
+          <ellipse cx="343" cy="181" rx="3" ry="4" fill="#333"/>
+          <ellipse cx="357" cy="181" rx="3" ry="4" fill="#333"/>
+          <!-- Smile -->
+          <path d="M343 191 Q350 198 357 191" stroke="#e57373" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <!-- Blush -->
+          <ellipse cx="337" cy="188" rx="6" ry="4" fill="#ffab91" opacity="0.6"/>
+          <ellipse cx="363" cy="188" rx="6" ry="4" fill="#ffab91" opacity="0.6"/>
+          <!-- Basket -->
+          <ellipse cx="390" cy="268" rx="22" ry="16" fill="#8d6e63"/>
+          <path d="M368 268 Q390 245 412 268" stroke="#6d4c41" stroke-width="5" fill="none"/>
+        </g>
+      </svg>`,
+
+    basket: `
+      <svg viewBox="0 0 800 320" xmlns="http://www.w3.org/2000/svg" class="scene-svg" style="background:linear-gradient(to bottom,#dcedc8 0%,#c5e1a5 100%)">
+        <g class="clickable-char" id="char_${idx}" onclick="charClick(event,${idx})" style="cursor:pointer">
+          <!-- Basket body -->
+          <ellipse cx="400" cy="230" rx="100" ry="70" fill="#8d6e63"/>
+          <!-- Weave pattern -->
+          <path d="M310 220 Q400 230 490 220" stroke="#6d4c41" stroke-width="3" fill="none"/>
+          <path d="M308 240 Q400 250 492 240" stroke="#6d4c41" stroke-width="3" fill="none"/>
+          <path d="M312 260 Q400 270 488 260" stroke="#6d4c41" stroke-width="3" fill="none"/>
+          <!-- Handle -->
+          <path d="M340 215 Q400 155 460 215" stroke="#6d4c41" stroke-width="10" fill="none" stroke-linecap="round"/>
+          <!-- Contents: cupcakes -->
+          <circle cx="370" cy="195" r="18" fill="#ffccbc"/>
+          <rect x="356" y="195" width="28" height="18" fill="#8d6e63" rx="4"/>
+          <circle cx="368" cy="192" r="5" fill="#e53935"/>
+          <circle cx="400" cy="195" r="18" fill="#ffe0b2"/>
+          <rect x="386" y="195" width="28" height="18" fill="#8d6e63" rx="4"/>
+          <circle cx="398" cy="192" r="5" fill="#66bb6a"/>
+          <!-- Apple -->
+          <circle cx="440" cy="200" r="20" fill="#66bb6a"/>
+          <path d="M440 182 Q443 175 448 178" stroke="#4caf50" stroke-width="2" fill="none"/>
+          <!-- Milk bottle -->
+          <rect x="458" y="178" width="22" height="45" fill="white" stroke="#bbb" stroke-width="2" rx="5"/>
+          <rect x="461" y="176" width="16" height="8" fill="#ddd" rx="3"/>
+          <!-- Cloth -->
+          <path d="M310 275 Q340 265 370 278 Q400 290 430 275 Q460 262 490 278" stroke="#ffcdd2" stroke-width="0" fill="#ffcdd2" opacity="0.8"/>
+        </g>
+      </svg>`,
+
+    wolf_meet: `
+      <svg viewBox="0 0 800 320" xmlns="http://www.w3.org/2000/svg" class="scene-svg" style="background:linear-gradient(to bottom,#f0f4c3 0%,#c8e6c9 60%,#4caf50 100%)">
+        <rect x="100" y="40" width="22" height="200" fill="#5d4037" rx="4"/>
+        <ellipse cx="111" cy="65" rx="48" ry="65" fill="#2e7d32"/>
+        <rect x="560" y="50" width="22" height="190" fill="#5d4037" rx="4"/>
+        <ellipse cx="571" cy="75" rx="42" ry="60" fill="#388e3c"/>
+        <!-- Path -->
+        <path d="M200 320 Q400 280 600 320" stroke="#bcaaa4" stroke-width="30" fill="none"/>
+        <!-- Wolf -->
+        <g class="clickable-char" id="char_${idx}" onclick="charClick(event,${idx})" style="cursor:pointer">
+          <ellipse cx="270" cy="250" rx="45" ry="65" fill="#9e9e9e"/>
+          <!-- Head -->
+          <ellipse cx="270" cy="170" rx="38" ry="35" fill="#9e9e9e"/>
+          <!-- Ears -->
+          <polygon points="248,142 238,115 263,140" fill="#9e9e9e"/>
+          <polygon points="292,142 302,115 277,140" fill="#9e9e9e"/>
+          <!-- Snout -->
+          <ellipse cx="270" cy="178" rx="20" ry="14" fill="#bdbdbd"/>
+          <!-- Nose -->
+          <ellipse cx="270" cy="170" rx="8" ry="5" fill="#424242"/>
+          <!-- Eyes (sneaky) -->
+          <ellipse cx="258" cy="163" rx="5" ry="4" fill="#33691e"/>
+          <ellipse cx="282" cy="163" rx="5" ry="4" fill="#33691e"/>
+          <!-- Smile/teeth -->
+          <path d="M256 182 Q270 192 284 182" stroke="#616161" stroke-width="2" fill="none"/>
+          <rect x="261" y="181" width="6" height="8" fill="white" rx="1"/>
+          <rect x="270" y="181" width="6" height="8" fill="white" rx="1"/>
+          <!-- Arms reaching -->
+          <path d="M225 230 Q200 210 185 225" stroke="#9e9e9e" stroke-width="16" fill="none" stroke-linecap="round"/>
+        </g>
+        <!-- Red Riding Hood (smaller, right side) -->
+        <g style="cursor:default">
+          <ellipse cx="490" cy="260" rx="28" ry="45" fill="#e53935"/>
+          <rect x="467" y="215" width="46" height="65" fill="#42a5f5" rx="6"/>
+          <ellipse cx="490" cy="192" rx="25" ry="22" fill="#e53935"/>
+          <circle cx="490" cy="190" r="19" fill="#ffccbc"/>
+          <ellipse cx="484" cy="187" rx="2.5" ry="3" fill="#333"/>
+          <ellipse cx="496" cy="187" rx="2.5" ry="3" fill="#333"/>
+          <path d="M484 197 Q490 203 496 197" stroke="#e57373" stroke-width="2" fill="none"/>
+          <ellipse cx="478" cy="194" rx="5" ry="3" fill="#ffab91" opacity="0.6"/>
+          <ellipse cx="502" cy="194" rx="5" ry="3" fill="#ffab91" opacity="0.6"/>
+        </g>
+      </svg>`,
+
+    granny_house: `
+      <svg viewBox="0 0 800 320" xmlns="http://www.w3.org/2000/svg" class="scene-svg" style="background:linear-gradient(to bottom,#e8f5e9 0%,#c8e6c9 60%,#81c784 100%)">
+        <!-- Trees bg -->
+        <rect x="560" y="30" width="20" height="180" fill="#5d4037" rx="3"/>
+        <ellipse cx="570" cy="55" rx="40" ry="58" fill="#2e7d32"/>
+        <rect x="620" y="50" width="18" height="160" fill="#5d4037" rx="3"/>
+        <ellipse cx="629" cy="72" rx="35" ry="50" fill="#388e3c"/>
+        <!-- House -->
+        <rect x="160" y="120" width="200" height="150" fill="#fff9c4" rx="4"/>
+        <!-- Roof -->
+        <polygon points="140,125 260,50 380,125" fill="#546e7a"/>
+        <rect x="245" y="90" width="30" height="35" fill="#6d4c41"/>
+        <!-- Windows -->
+        <rect x="175" y="145" width="60" height="50" fill="#b3e5fc" stroke="#546e7a" stroke-width="3" rx="4"/>
+        <line x1="205" y1="145" x2="205" y2="195" stroke="#546e7a" stroke-width="2"/>
+        <line x1="175" y1="170" x2="235" y2="170" stroke="#546e7a" stroke-width="2"/>
+        <!-- Door -->
+        <rect x="245" y="185" width="50" height="85" fill="#e53935" rx="8"/>
+        <circle cx="286" cy="225" r="5" fill="#ffd166"/>
+        <!-- Bushes -->
+        <circle cx="155" cy="270" r="22" fill="#2e7d32"/>
+        <circle cx="372" cy="270" r="22" fill="#2e7d32"/>
+        <!-- Wolf sneaking -->
+        <g class="clickable-char" id="char_${idx}" onclick="charClick(event,${idx})" style="cursor:pointer">
+          <ellipse cx="570" cy="258" rx="36" ry="50" fill="#9e9e9e"/>
+          <ellipse cx="570" cy="188" rx="30" ry="28" fill="#9e9e9e"/>
+          <polygon points="552,165 543,140 564,162" fill="#9e9e9e"/>
+          <polygon points="588,165 597,140 576,162" fill="#9e9e9e"/>
+          <ellipse cx="570" cy="196" rx="16" ry="11" fill="#bdbdbd"/>
+          <ellipse cx="570" cy="188" rx="6" ry="4" fill="#424242"/>
+          <ellipse cx="560" cy="183" rx="4" ry="3" fill="#33691e"/>
+          <ellipse cx="580" cy="183" rx="4" ry="3" fill="#33691e"/>
+          <path d="M558 198 Q570 206 582 198" stroke="#616161" stroke-width="2" fill="none"/>
+          <rect x="561" y="197" width="5" height="7" fill="white" rx="1"/>
+          <rect x="569" y="197" width="5" height="7" fill="white" rx="1"/>
+        </g>
+      </svg>`,
+
+    inside_house: `
+      <svg viewBox="0 0 800 320" xmlns="http://www.w3.org/2000/svg" class="scene-svg" style="background:linear-gradient(to bottom,#e1f5fe 0%,#b3e5fc 100%)">
+        <!-- Wallpaper -->
+        <rect x="0" y="0" width="800" height="280" fill="#b2ebf2"/>
+        <!-- Wall pattern -->
+        <circle cx="100" cy="80" r="15" fill="#80cbc4" opacity="0.4"/>
+        <circle cx="200" cy="50" r="15" fill="#80cbc4" opacity="0.4"/>
+        <circle cx="300" cy="80" r="15" fill="#80cbc4" opacity="0.4"/>
+        <circle cx="500" cy="60" r="15" fill="#80cbc4" opacity="0.4"/>
+        <circle cx="650" cy="80" r="15" fill="#80cbc4" opacity="0.4"/>
+        <!-- Floor -->
+        <rect x="0" y="270" width="800" height="50" fill="#8d6e63"/>
+        <!-- Window -->
+        <rect x="60" y="60" width="130" height="110" fill="#87ceeb" stroke="#5d4037" stroke-width="6" rx="6"/>
+        <line x1="125" y1="60" x2="125" y2="170" stroke="#5d4037" stroke-width="5"/>
+        <line x1="60" y1="115" x2="190" y2="115" stroke="#5d4037" stroke-width="5"/>
+        <rect x="55" y="58" width="15" height="115" fill="#1565c0" opacity="0.7" rx="3"/>
+        <rect x="175" y="58" width="15" height="115" fill="#1565c0" opacity="0.7" rx="3"/>
+        <!-- Photo frame -->
+        <rect x="280" y="55" width="80" height="65" fill="#bcaaa4" stroke="#6d4c41" stroke-width="4" rx="4"/>
+        <rect x="286" y="61" width="68" height="53" fill="#f8bbd0"/>
+        <!-- Door -->
+        <rect x="600" y="70" width="120" height="210" fill="#e53935" rx="6"/>
+        <circle cx="610" cy="175" r="8" fill="#ffd166"/>
+        <!-- Character LRRH -->
+        <g class="clickable-char" id="char_${idx}" onclick="charClick(event,${idx})" style="cursor:pointer">
+          <ellipse cx="420" cy="255" rx="38" ry="50" fill="#e53935"/>
+          <rect x="395" y="210" width="50" height="68" fill="#42a5f5" rx="8"/>
+          <rect x="402" y="228" width="36" height="48" fill="white" rx="5"/>
+          <ellipse cx="420" cy="188" rx="30" ry="26" fill="#e53935"/>
+          <circle cx="420" cy="186" r="21" fill="#ffccbc"/>
+          <ellipse cx="413" cy="183" rx="3" ry="3.5" fill="#333"/>
+          <ellipse cx="427" cy="183" rx="3" ry="3.5" fill="#333"/>
+          <path d="M413 194 Q420 200 427 194" stroke="#e57373" stroke-width="2" fill="none"/>
+          <ellipse cx="407" cy="190" rx="5" ry="3" fill="#ffab91" opacity="0.6"/>
+          <ellipse cx="433" cy="190" rx="5" ry="3" fill="#ffab91" opacity="0.6"/>
+          <ellipse cx="455" cy="262" rx="20" ry="14" fill="#8d6e63"/>
+          <path d="M435 262 Q455 242 475 262" stroke="#6d4c41" stroke-width="5" fill="none"/>
+        </g>
+      </svg>`,
+
+    bed_scene: `
+      <svg viewBox="0 0 800 320" xmlns="http://www.w3.org/2000/svg" class="scene-svg" style="background:linear-gradient(to bottom,#e8eaf6 0%,#c5cae9 100%)">
+        <rect x="0" y="270" width="800" height="50" fill="#8d6e63"/>
+        <!-- Bed frame -->
+        <rect x="80" y="160" width="400" height="140" fill="#5d4037" rx="10"/>
+        <rect x="80" y="150" width="60" height="175" fill="#6d4c41" rx="8"/>
+        <rect x="415" y="150" width="60" height="175" fill="#6d4c41" rx="8"/>
+        <!-- Mattress / covers -->
+        <rect x="90" y="170" width="380" height="120" fill="#b2dfdb" rx="6"/>
+        <rect x="90" y="170" width="380" height="50" fill="#ce93d8" rx="6"/>
+        <!-- Pillow -->
+        <ellipse cx="210" cy="195" rx="90" ry="40" fill="#fff9c4"/>
+        <!-- Wolf in bed -->
+        <g class="clickable-char" id="char_${idx}" onclick="charClick(event,${idx})" style="cursor:pointer">
+          <!-- Granny cap -->
+          <ellipse cx="200" cy="165" rx="50" ry="20" fill="white" stroke="#ddd" stroke-width="2"/>
+          <!-- Wolf head -->
+          <ellipse cx="200" cy="185" rx="45" ry="42" fill="#9e9e9e"/>
+          <polygon points="172,155 160,125 190,152" fill="#9e9e9e"/>
+          <polygon points="228,155 240,125 210,152" fill="#9e9e9e"/>
+          <ellipse cx="200" cy="196" rx="24" ry="16" fill="#bdbdbd"/>
+          <ellipse cx="200" cy="185" rx="10" ry="6" fill="#424242"/>
+          <ellipse cx="186" cy="178" rx="6" ry="5" fill="#e8eaf6"/>
+          <ellipse cx="214" cy="178" rx="6" ry="5" fill="#e8eaf6"/>
+          <ellipse cx="186" cy="178" rx="3" ry="3" fill="#37474f"/>
+          <ellipse cx="214" cy="178" rx="3" ry="3" fill="#37474f"/>
+          <!-- Granny clothes -->
+          <rect x="155" y="215" width="90" height="50" fill="#f8bbd0" rx="6"/>
+        </g>
+        <!-- LRRH (right side) -->
+        <g>
+          <ellipse cx="570" cy="235" rx="38" ry="55" fill="#42a5f5"/>
+          <ellipse cx="570" cy="175" rx="28" ry="25" fill="#ffccbc"/>
+          <path d="M544 162 Q570 148 596 162 Q600 135 570 130 Q540 135 544 162" fill="#e53935"/>
+          <ellipse cx="562" cy="172" rx="3" ry="3.5" fill="#333"/>
+          <ellipse cx="578" cy="172" rx="3" ry="3.5" fill="#333"/>
+          <path d="M563 183 Q570 189 577 183" stroke="#e57373" stroke-width="2" fill="none"/>
+          <ellipse cx="555" cy="179" rx="5" ry="3" fill="#ffab91" opacity="0.5"/>
+          <ellipse cx="585" cy="179" rx="5" ry="3" fill="#ffab91" opacity="0.5"/>
+        </g>
+      </svg>`,
+
+    bed_scene2: `
+      <svg viewBox="0 0 800 320" xmlns="http://www.w3.org/2000/svg" class="scene-svg" style="background:linear-gradient(to bottom,#e8eaf6 0%,#c5cae9 100%)">
+        <rect x="0" y="270" width="800" height="50" fill="#8d6e63"/>
+        <rect x="80" y="160" width="400" height="140" fill="#5d4037" rx="10"/>
+        <rect x="80" y="150" width="60" height="175" fill="#6d4c41" rx="8"/>
+        <rect x="415" y="150" width="60" height="175" fill="#6d4c41" rx="8"/>
+        <rect x="90" y="170" width="380" height="120" fill="#b2dfdb" rx="6"/>
+        <rect x="90" y="170" width="380" height="50" fill="#ce93d8" rx="6"/>
+        <ellipse cx="210" cy="195" rx="90" ry="40" fill="#fff9c4"/>
+        <g class="clickable-char" id="char_${idx}" onclick="charClick(event,${idx})" style="cursor:pointer">
+          <ellipse cx="200" cy="165" rx="50" ry="20" fill="white" stroke="#ddd" stroke-width="2"/>
+          <ellipse cx="200" cy="185" rx="45" ry="42" fill="#9e9e9e"/>
+          <polygon points="172,155 160,125 190,152" fill="#9e9e9e"/>
+          <polygon points="228,155 240,125 210,152" fill="#9e9e9e"/>
+          <ellipse cx="200" cy="196" rx="24" ry="16" fill="#bdbdbd"/>
+          <ellipse cx="200" cy="185" rx="10" ry="6" fill="#424242"/>
+          <ellipse cx="186" cy="178" rx="8" ry="6" fill="#e8eaf6"/>
+          <ellipse cx="214" cy="178" rx="8" ry="6" fill="#e8eaf6"/>
+          <ellipse cx="186" cy="178" rx="4" ry="4" fill="#37474f"/>
+          <ellipse cx="214" cy="178" rx="4" ry="4" fill="#37474f"/>
+          <rect x="155" y="215" width="90" height="50" fill="#f8bbd0" rx="6"/>
+        </g>
+        <g>
+          <ellipse cx="570" cy="235" rx="38" ry="55" fill="#42a5f5"/>
+          <ellipse cx="570" cy="175" rx="28" ry="25" fill="#ffccbc"/>
+          <path d="M544 162 Q570 148 596 162 Q600 135 570 130 Q540 135 544 162" fill="#e53935"/>
+          <ellipse cx="562" cy="172" rx="3" ry="3.5" fill="#333"/>
+          <ellipse cx="578" cy="172" rx="3" ry="3.5" fill="#333"/>
+          <path d="M563 183 Q570 189 577 183" stroke="#e57373" stroke-width="2" fill="none"/>
+        </g>
+      </svg>`,
+
+    teeth_scene: `
+      <svg viewBox="0 0 800 320" xmlns="http://www.w3.org/2000/svg" class="scene-svg" style="background:linear-gradient(to bottom,#fce4ec 0%,#f8bbd0 100%)">
+        <rect x="0" y="270" width="800" height="50" fill="#8d6e63"/>
+        <rect x="80" y="160" width="400" height="140" fill="#5d4037" rx="10"/>
+        <rect x="80" y="150" width="60" height="175" fill="#6d4c41" rx="8"/>
+        <rect x="415" y="150" width="60" height="175" fill="#6d4c41" rx="8"/>
+        <rect x="90" y="170" width="380" height="120" fill="#b2dfdb" rx="6"/>
+        <rect x="90" y="170" width="380" height="50" fill="#f48fb1" rx="6"/>
+        <ellipse cx="210" cy="195" rx="90" ry="40" fill="#fff9c4"/>
+        <g class="clickable-char" id="char_${idx}" onclick="charClick(event,${idx})" style="cursor:pointer">
+          <ellipse cx="200" cy="165" rx="50" ry="20" fill="white" stroke="#ddd" stroke-width="2"/>
+          <ellipse cx="200" cy="185" rx="45" ry="42" fill="#9e9e9e"/>
+          <polygon points="172,155 162,122 192,152" fill="#9e9e9e"/>
+          <polygon points="228,155 238,122 208,152" fill="#9e9e9e"/>
+          <ellipse cx="200" cy="200" rx="28" ry="18" fill="#bdbdbd"/>
+          <ellipse cx="200" cy="185" rx="10" ry="6" fill="#424242"/>
+          <!-- Open mouth with teeth -->
+          <path d="M174 205 Q200 220 226 205" fill="#e53935"/>
+          <rect x="179" y="204" width="7" height="10" fill="white" rx="1"/>
+          <rect x="189" y="204" width="7" height="10" fill="white" rx="1"/>
+          <rect x="199" y="204" width="7" height="10" fill="white" rx="1"/>
+          <rect x="209" y="204" width="7" height="10" fill="white" rx="1"/>
+          <!-- Big eyes excited -->
+          <ellipse cx="184" cy="178" rx="9" ry="8" fill="#e8eaf6"/>
+          <ellipse cx="216" cy="178" rx="9" ry="8" fill="#e8eaf6"/>
+          <ellipse cx="184" cy="178" rx="5" ry="5" fill="#37474f"/>
+          <ellipse cx="216" cy="178" rx="5" ry="5" fill="#37474f"/>
+          <rect x="155" y="215" width="90" height="50" fill="#f8bbd0" rx="6"/>
+        </g>
+        <!-- LRRH scared -->
+        <g>
+          <ellipse cx="570" cy="235" rx="38" ry="55" fill="#42a5f5"/>
+          <ellipse cx="570" cy="175" rx="28" ry="25" fill="#ffccbc"/>
+          <path d="M544 162 Q570 148 596 162 Q600 135 570 130 Q540 135 544 162" fill="#e53935"/>
+          <ellipse cx="562" cy="172" rx="4" ry="4" fill="#333"/>
+          <ellipse cx="578" cy="172" rx="4" ry="4" fill="#333"/>
+          <!-- Scared mouth open -->
+          <ellipse cx="570" cy="186" rx="5" ry="6" fill="#e57373"/>
+          <ellipse cx="555" cy="179" rx="5" ry="3" fill="#ffab91" opacity="0.5"/>
+          <ellipse cx="585" cy="179" rx="5" ry="3" fill="#ffab91" opacity="0.5"/>
+        </g>
+      </svg>`,
+
+    run_scene: `
+      <svg viewBox="0 0 800 320" xmlns="http://www.w3.org/2000/svg" class="scene-svg" style="background:linear-gradient(to bottom,#fff8e1 0%,#ffe082 100%)">
+        <rect x="0" y="270" width="800" height="50" fill="#8d6e63"/>
+        <rect x="0" y="260" width="800" height="15" fill="#bcaaa4"/>
+        <!-- Room elements -->
+        <rect x="30" y="50" width="120" height="100" fill="#87ceeb" stroke="#5d4037" stroke-width="5" rx="4"/>
+        <rect x="220" y="45" width="75" height="60" fill="#bcaaa4" stroke="#6d4c41" stroke-width="3" rx="3"/>
+        <!-- Door -->
+        <rect x="620" y="60" width="100" height="200" fill="#e53935" rx="6" opacity="0.8"/>
+        <circle cx="630" cy="165" r="7" fill="#ffd166"/>
+        <!-- Running LRRH -->
+        <g class="clickable-char" id="char_${idx}" onclick="charClick(event,${idx})" style="cursor:pointer" transform="translate(0,0)">
+          <ellipse cx="400" cy="248" rx="42" ry="35" fill="#e53935"/>
+          <rect x="372" y="200" width="56" height="70" fill="#42a5f5" rx="8"/>
+          <rect x="380" y="218" width="40" height="50" fill="white" rx="5"/>
+          <ellipse cx="400" cy="178" rx="32" ry="28" fill="#e53935"/>
+          <circle cx="400" cy="176" r="22" fill="#ffccbc"/>
+          <ellipse cx="392" cy="173" rx="3.5" ry="3" fill="#333"/>
+          <ellipse cx="408" cy="173" rx="3.5" ry="3" fill="#333"/>
+          <!-- Worried mouth -->
+          <path d="M392 186 Q400 181 408 186" stroke="#e57373" stroke-width="2" fill="none"/>
+          <ellipse cx="386" cy="180" rx="5" ry="3" fill="#ffab91" opacity="0.6"/>
+          <ellipse cx="414" cy="180" rx="5" ry="3" fill="#ffab91" opacity="0.6"/>
+          <!-- Running leg/arm lines -->
+          <line x1="388" y1="265" x2="370" y2="295" stroke="#e53935" stroke-width="8" stroke-linecap="round"/>
+          <line x1="412" y1="265" x2="430" y2="295" stroke="#e53935" stroke-width="8" stroke-linecap="round"/>
+          <line x1="368" y1="225" x2="340" y2="240" stroke="#42a5f5" stroke-width="8" stroke-linecap="round"/>
+          <!-- Basket swinging -->
+          <ellipse cx="450" cy="250" rx="20" ry="14" fill="#8d6e63"/>
+          <path d="M430 250 Q450 232 470 250" stroke="#6d4c41" stroke-width="5" fill="none"/>
+        </g>
+        <!-- Motion lines -->
+        <line x1="330" y1="170" x2="290" y2="170" stroke="#ffd166" stroke-width="3" stroke-dasharray="8,5" opacity="0.7"/>
+        <line x1="330" y1="185" x2="280" y2="185" stroke="#ffd166" stroke-width="2" stroke-dasharray="6,4" opacity="0.5"/>
+      </svg>`,
+
+    woodcutter: `
+      <svg viewBox="0 0 800 320" xmlns="http://www.w3.org/2000/svg" class="scene-svg" style="background:linear-gradient(to bottom,#e8f5e9 0%,#c8e6c9 60%,#81c784 100%)">
+        <rect x="0" y="280" width="800" height="40" fill="#4caf50"/>
+        <!-- Trees -->
+        <rect x="520" y="30" width="22" height="190" fill="#5d4037" rx="4"/>
+        <ellipse cx="531" cy="58" rx="48" ry="70" fill="#2e7d32"/>
+        <rect x="610" y="50" width="20" height="170" fill="#5d4037" rx="4"/>
+        <ellipse cx="620" cy="75" rx="42" ry="62" fill="#388e3c"/>
+        <!-- House -->
+        <rect x="120" y="130" width="190" height="155" fill="#fff9c4" rx="4"/>
+        <polygon points="100,135 215,55 335,135" fill="#546e7a"/>
+        <rect x="175" y="155" width="55" height="45" fill="#b3e5fc" stroke="#546e7a" stroke-width="3" rx="3"/>
+        <rect x="225" y="185" width="48" height="98" fill="#e53935" rx="6"/>
+        <!-- Woodcutter -->
+        <g class="clickable-char" id="char_${idx}" onclick="charClick(event,${idx})" style="cursor:pointer">
+          <!-- Body -->
+          <rect x="490" y="185" width="55" height="90" fill="#795548" rx="6"/>
+          <!-- Overalls strap -->
+          <rect x="499" y="185" width="37" height="90" fill="#6d4c41" rx="4"/>
+          <!-- Head -->
+          <circle cx="517" cy="165" r="30" fill="#ffb74d"/>
+          <!-- Hat -->
+          <ellipse cx="517" cy="140" rx="38" ry="10" fill="#546e7a"/>
+          <rect x="494" y="125" width="46" height="20" fill="#546e7a" rx="4"/>
+          <!-- Red beard -->
+          <ellipse cx="517" cy="185" rx="24" ry="18" fill="#bf360c"/>
+          <!-- Eyes -->
+          <ellipse cx="506" cy="162" rx="4" ry="4" fill="#333"/>
+          <ellipse cx="528" cy="162" rx="4" ry="4" fill="#333"/>
+          <!-- Smile -->
+          <path d="M505 175 Q517 183 529 175" stroke="#333" stroke-width="2" fill="none"/>
+          <!-- Axe -->
+          <rect x="540" y="155" width="10" height="100" fill="#8d6e63" rx="3"/>
+          <polygon points="550,155 580,140 580,185 550,175" fill="#9e9e9e"/>
+          <polygon points="548,155 548,175 520,165" fill="#bdbdbd"/>
+          <!-- Legs -->
+          <rect x="492" y="268" width="22" height="35" fill="#4e342e" rx="4"/>
+          <rect x="518" y="268" width="22" height="35" fill="#4e342e" rx="4"/>
+          <!-- Boots -->
+          <rect x="488" y="296" width="26" height="16" fill="#3e2723" rx="4"/>
+          <rect x="514" y="296" width="26" height="16" fill="#3e2723" rx="4"/>
+        </g>
+        <!-- Path -->
+        <path d="M180 320 Q400 290 600 320" stroke="#bcaaa4" stroke-width="25" fill="none" opacity="0.6"/>
+      </svg>`,
+
+    wolf_runs: `
+      <svg viewBox="0 0 800 320" xmlns="http://www.w3.org/2000/svg" class="scene-svg" style="background:linear-gradient(to bottom,#f1f8e9 0%,#dcedc8 60%,#aed581 100%)">
+        <rect x="0" y="280" width="800" height="40" fill="#8bc34a"/>
+        <!-- Trees -->
+        <rect x="620" y="20" width="22" height="200" fill="#5d4037" rx="4"/>
+        <ellipse cx="631" cy="48" rx="50" ry="72" fill="#1b5e20"/>
+        <!-- House -->
+        <rect x="200" y="120" width="185" height="160" fill="#fff9c4" rx="4"/>
+        <polygon points="180,125 292,45 400,125" fill="#546e7a"/>
+        <rect x="272" y="185" width="48" height="95" fill="#e53935" rx="6"/>
+        <!-- Wolf fleeing left with granny clothes -->
+        <g style="cursor:default">
+          <ellipse cx="90" cy="248" rx="42" ry="32" fill="#f48fb1"/>
+          <rect x="50" y="185" width="80" height="80" fill="#f48fb1" rx="6"/>
+          <!-- Wolf head (scared) -->
+          <ellipse cx="88" cy="165" rx="38" ry="34" fill="#9e9e9e"/>
+          <!-- Granny cap -->
+          <ellipse cx="88" cy="148" rx="46" ry="18" fill="white" stroke="#ddd" stroke-width="2"/>
+          <polygon points="64,148 55,122 80,146" fill="#9e9e9e"/>
+          <polygon points="112,148 121,122 96,146" fill="#9e9e9e"/>
+          <ellipse cx="88" cy="176" rx="22" ry="15" fill="#bdbdbd"/>
+          <ellipse cx="76" cy="159" rx="5" ry="4" fill="#33691e"/>
+          <ellipse cx="100" cy="159" rx="5" ry="4" fill="#33691e"/>
+          <!-- Scared/running -->
+          <path d="M74 180 Q88 188 102 180" stroke="#616161" stroke-width="2" fill="none"/>
+          <!-- Running lines -->
+          <line x1="48" y1="200" x2="10" y2="200" stroke="#e53935" stroke-width="3" stroke-dasharray="8,5" opacity="0.6"/>
+        </g>
+        <!-- Woodcutter and LRRH -->
+        <g class="clickable-char" id="char_${idx}" onclick="charClick(event,${idx})" style="cursor:pointer">
+          <!-- Woodcutter -->
+          <rect x="430" y="190" width="50" height="85" fill="#795548" rx="6"/>
+          <circle cx="455" cy="172" r="28" fill="#ffb74d"/>
+          <ellipse cx="455" cy="148" rx="36" ry="9" fill="#546e7a"/>
+          <rect x="434" y="133" width="42" height="18" fill="#546e7a" rx="4"/>
+          <ellipse cx="455" cy="192" rx="22" ry="17" fill="#bf360c"/>
+          <!-- Axe -->
+          <rect x="476" y="160" width="9" height="90" fill="#8d6e63" rx="3"/>
+          <polygon points="485,160 512,148 512,188 485,172" fill="#9e9e9e"/>
+          <!-- LRRH beside woodcutter -->
+          <ellipse cx="540" cy="250" rx="30" ry="38" fill="#e53935"/>
+          <rect x="516" y="215" width="48" height="60" fill="#42a5f5" rx="7"/>
+          <ellipse cx="540" cy="196" rx="26" ry="22" fill="#e53935"/>
+          <circle cx="540" cy="194" r="19" fill="#ffccbc"/>
+          <ellipse cx="533" cy="191" rx="3" ry="3" fill="#333"/>
+          <ellipse cx="547" cy="191" rx="3" ry="3" fill="#333"/>
+          <path d="M533 202 Q540 208 547 202" stroke="#e57373" stroke-width="2" fill="none"/>
+        </g>
+      </svg>`,
+
+    happy_end: `
+      <svg viewBox="0 0 800 320" xmlns="http://www.w3.org/2000/svg" class="scene-svg" style="background:linear-gradient(to bottom,#f1f8e9 0%,#c8e6c9 50%,#81c784 100%)">
+        <rect x="0" y="275" width="800" height="45" fill="#66bb6a"/>
+        <!-- Sky trees -->
+        <rect x="80" y="30" width="22" height="190" fill="#5d4037" rx="4"/>
+        <ellipse cx="91" cy="55" rx="48" ry="70" fill="#2e7d32"/>
+        <rect x="620" y="40" width="22" height="180" fill="#5d4037" rx="4"/>
+        <ellipse cx="631" cy="62" rx="45" ry="65" fill="#388e3c"/>
+        <!-- Sun -->
+        <circle cx="650" cy="55" r="45" fill="#ffd166" opacity="0.9"/>
+        <!-- Rainbow -->
+        <path d="M100 260 Q400 80 700 260" stroke="#e53935" stroke-width="5" fill="none" opacity="0.5"/>
+        <path d="M115 265 Q400 95 685 265" stroke="#ff9800" stroke-width="5" fill="none" opacity="0.5"/>
+        <path d="M130 270 Q400 110 670 270" stroke="#ffd166" stroke-width="5" fill="none" opacity="0.5"/>
+        <!-- Rose bush -->
+        <ellipse cx="200" cy="255" rx="65" ry="40" fill="#2e7d32"/>
+        <circle cx="178" cy="238" r="13" fill="#e53935"/>
+        <circle cx="198" cy="230" r="12" fill="#ef5350"/>
+        <circle cx="220" cy="238" r="13" fill="#e53935"/>
+        <!-- Granny -->
+        <g>
+          <ellipse cx="370" cy="248" rx="48" ry="45" fill="#f8bbd0"/>
+          <rect x="322" y="185" width="96" height="90" fill="#f48fb1" rx="8"/>
+          <!-- Head -->
+          <circle cx="370" cy="168" r="38" fill="#ffccbc"/>
+          <!-- Cap -->
+          <ellipse cx="370" cy="146" rx="48" ry="22" fill="white" stroke="#ddd" stroke-width="3"/>
+          <!-- Hair -->
+          <path d="M332 168 Q345 148 370 145 Q395 148 408 168" fill="#bdbdbd"/>
+          <ellipse cx="363" cy="164" rx="3.5" ry="4" fill="#555"/>
+          <ellipse cx="377" cy="164" rx="3.5" ry="4" fill="#555"/>
+          <path d="M362 177 Q370 185 378 177" stroke="#e57373" stroke-width="2" fill="none"/>
+          <ellipse cx="356" cy="172" rx="6" ry="4" fill="#ffab91" opacity="0.7"/>
+          <ellipse cx="384" cy="172" rx="6" ry="4" fill="#ffab91" opacity="0.7"/>
+        </g>
+        <!-- LRRH -->
+        <g class="clickable-char" id="char_${idx}" onclick="charClick(event,${idx})" style="cursor:pointer">
+          <ellipse cx="510" cy="252" rx="38" ry="48" fill="#e53935"/>
+          <rect x="484" y="210" width="52" height="68" fill="#42a5f5" rx="8"/>
+          <rect x="490" y="228" width="40" height="50" fill="white" rx="5"/>
+          <ellipse cx="510" cy="187" rx="30" ry="27" fill="#e53935"/>
+          <circle cx="510" cy="185" r="22" fill="#ffccbc"/>
+          <ellipse cx="503" cy="182" rx="3" ry="3.5" fill="#333"/>
+          <ellipse cx="517" cy="182" rx="3" ry="3.5" fill="#333"/>
+          <path d="M503 194 Q510 201 517 194" stroke="#e57373" stroke-width="2.5" fill="none"/>
+          <ellipse cx="497" cy="189" rx="5" ry="3.5" fill="#ffab91" opacity="0.7"/>
+          <ellipse cx="523" cy="189" rx="5" ry="3.5" fill="#ffab91" opacity="0.7"/>
+          <ellipse cx="545" cy="260" rx="19" ry="13" fill="#8d6e63"/>
+          <path d="M526 260 Q545 240 564 260" stroke="#6d4c41" stroke-width="5" fill="none"/>
+        </g>
+        <!-- Stars decoration -->
+        <text x="155" y="120" font-size="22" opacity="0.7">⭐</text>
+        <text x="590" y="110" font-size="18" opacity="0.6">✨</text>
+        <text x="420" y="95" font-size="26" opacity="0.8">🌟</text>
+      </svg>`,
+  };
+
+  return scenes[slide.scene] || `<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:4rem">📖</div>`;
+}
+
+// Quiz after these slide indices (0-based)
+const quizAfterSlides = quizzes.map(q => q.afterSlide);
+let quizIdx = 0; // which quiz we're on
+
+function startStory() {
+  currentSlide = 0;
+  quizIdx = 0;
+  quizScores = [];
+  quizAnswers = [];
+  buildSlides();
+  updateUI();
+  showScreen('story');
+  stopSpeech();
+}
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function updateUI() {
+  const total = slides.length;
+  const pct = ((currentSlide + 1) / total) * 100;
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('pageIndicator').textContent = `Page ${currentSlide + 1} / ${total}`;
+  document.getElementById('prevBtn').disabled = currentSlide === 0;
+  const nextBtn = document.getElementById('nextBtn');
+  if (currentSlide === slides.length - 1) {
+    nextBtn.textContent = 'See Results 🏆';
+  } else {
+    nextBtn.innerHTML = 'Next ➡️';
+  }
+}
+
+function navigate(dir) {
+  stopSpeech();
+  const old = currentSlide;
+  if (dir === 1) {
+    // Check if quiz needed
+    if (quizIdx < quizzes.length && quizAfterSlides[quizIdx] === currentSlide) {
+      pendingQuizIdx = quizIdx;
+      showQuiz(quizIdx);
+      return;
+    }
+    if (currentSlide === slides.length - 1) {
+      showResults();
+      return;
+    }
+    currentSlide++;
+  } else {
+    if (currentSlide === 0) return;
+    currentSlide--;
+  }
+  transitionSlide(old, currentSlide);
+  updateUI();
+}
+
+function transitionSlide(from, to) {
+  const slides_els = document.querySelectorAll('.slide');
+  if (slides_els[from]) {
+    slides_els[from].classList.add('exit');
+    setTimeout(() => {
+      slides_els[from].classList.remove('active', 'exit');
+    }, 500);
+  }
+  if (slides_els[to]) {
+    slides_els[to].style.transform = (to > from) ? 'translateX(60px)' : 'translateX(-60px)';
+    slides_els[to].classList.add('active');
+    setTimeout(() => { slides_els[to].style.transform = ''; }, 10);
+  }
+}
+
+// ===== SPEECH =====
+function toggleRead(slideIdx) {
+  const btn = document.getElementById('readBtn_' + slideIdx);
+  if (currentUtterance && speechSynth.speaking) {
+    stopSpeech();
+    return;
+  }
+  const text = slides[slideIdx].text;
+  speak(text, btn);
+}
+
+function stripEmoji(text) {
+  return text.replace(/[\u{1F000}-\u{1FFFF}]|[\u{2600}-\u{27BF}]|[\u{2300}-\u{23FF}]|[\u{2B00}-\u{2BFF}]|[\u{FE00}-\u{FEFF}]|[\u{1F900}-\u{1F9FF}]|[\u{1FA00}-\u{1FA6F}]|[\u{1FA70}-\u{1FAFF}]/gu, '').replace(/\s+/g, ' ').trim();
+}
+
+function speak(text, btn) {
+  stopSpeech();
+  const utter = new SpeechSynthesisUtterance(stripEmoji(text));
+  utter.rate = 0.85;
+  utter.pitch = 1.25;
+  utter.volume = 1;
+  // Try to find a female/child voice
+  const voices = speechSynth.getVoices();
+  const preferred = voices.find(v => /female|girl|child/i.test(v.name)) ||
+                    voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('samantha')) ||
+                    voices.find(v => v.lang.startsWith('en'));
+  if (preferred) utter.voice = preferred;
+
+  if (btn) { btn.classList.add('reading'); btn.textContent = '⏹'; currentReadBtn = btn; }
+  utter.onend = () => {
+    if (btn) { btn.classList.remove('reading'); btn.textContent = '🔊'; }
+    currentReadBtn = null;
+    currentUtterance = null;
+  };
+  currentUtterance = utter;
+  speechSynth.speak(utter);
+}
+
+function stopSpeech() {
+  speechSynth.cancel();
+  if (currentReadBtn) { currentReadBtn.classList.remove('reading'); currentReadBtn.textContent = '🔊'; currentReadBtn = null; }
+  currentUtterance = null;
+}
+
+// ===== CHARACTER CLICK =====
+function charClick(event, slideIdx) {
+  event.stopPropagation();
+  const slide = slides[slideIdx];
+  const char = document.getElementById('char_' + slideIdx);
+  if (!char) return;
+
+  // Bounce animation
+  char.classList.remove('bounce');
+  void char.offsetWidth;
+  char.classList.add('bounce');
+
+  // Speech bubble
+  const existing = document.getElementById('bubble_' + slideIdx);
+  if (existing) existing.remove();
+
+  const sayings = slide.charSay;
+  const text = sayings[Math.floor(Math.random() * sayings.length)];
+
+  const svgEl = char.closest('.slide-image-area');
+  const bubble = document.createElement('div');
+  bubble.id = 'bubble_' + slideIdx;
+  bubble.className = 'speech-bubble';
+  bubble.textContent = text;
+
+  // Position bubble near top of image area
+  const rect = svgEl.getBoundingClientRect();
+  bubble.style.position = 'absolute';
+  bubble.style.top = '10px';
+  bubble.style.left = '50%';
+  bubble.style.transform = 'translateX(-50%)';
+  bubble.style.zIndex = '100';
+
+  svgEl.style.position = 'relative';
+  svgEl.appendChild(bubble);
+
+  // Speak the character line
+  speak(text, null);
+
+  setTimeout(() => { bubble.remove(); }, 3500);
+}
+
+function landingCharClick() {
+  const char = document.getElementById('landingChar');
+  char.style.transform = 'scale(1.3) rotate(15deg)';
+  speak("Hello! I'm Little Red Riding Hood! Click Start Reading to hear my story! 📖", null);
+  setTimeout(() => { char.style.transform = ''; }, 600);
+}
+
+// ===== QUIZ =====
+function showQuiz(idx) {
+  const q = quizzes[idx];
+  document.getElementById('quizEmoji').textContent = q.emoji;
+  document.getElementById('quizLabel').textContent = `Question ${idx + 1} of ${quizzes.length}`;
+  document.getElementById('quizQuestion').textContent = q.question;
+  document.getElementById('quizFeedback').className = 'quiz-feedback';
+  document.getElementById('quizFeedback').textContent = '';
+  document.getElementById('quizContinueBtn').className = 'quiz-continue-btn';
+
+  const optEl = document.getElementById('quizOptions');
+  optEl.innerHTML = '';
+  const letters = ['A', 'B', 'C', 'D'];
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'quiz-option';
+    btn.innerHTML = `<span class="option-letter">${letters[i]}</span> ${opt}`;
+    btn.onclick = () => answerQuiz(i, idx);
+    optEl.appendChild(btn);
+  });
+
+  showScreen('quiz');
+  speak(q.question, null);
+}
+
+function answerQuiz(chosen, qIdx) {
+  const q = quizzes[qIdx];
+  const opts = document.querySelectorAll('.quiz-option');
+  opts.forEach((o, i) => {
+    o.disabled = true;
+    if (i === q.correct) o.classList.add('correct');
+    else if (i === chosen) o.classList.add('wrong');
+  });
+
+  const fb = document.getElementById('quizFeedback');
+  const isCorrect = chosen === q.correct;
+  quizScores.push(isCorrect ? 1 : 0);
+  quizAnswers.push({ question: q.question, chosen: q.options[chosen], correct: q.options[q.correct], ok: isCorrect });
+
+  fb.textContent = isCorrect ? '🎉 ' + q.explanation : '😅 Not quite! ' + q.explanation;
+  fb.className = 'quiz-feedback show ' + (isCorrect ? 'correct-fb' : 'wrong-fb');
+
+  speak(fb.textContent, null);
+
+  document.getElementById('quizContinueBtn').className = 'quiz-continue-btn show';
+}
+
+function goBackToStory() {
+  stopSpeech();
+  // Go back to the first slide of the current 2-page block so they can re-read
+  const blockStart = Math.max(0, quizzes[pendingQuizIdx].afterSlide - 1);
+  currentSlide = blockStart;
+  buildSlides();
+  const allSlides = document.querySelectorAll('.slide');
+  allSlides.forEach((s, i) => s.classList.toggle('active', i === currentSlide));
+  updateUI();
+  showScreen('story');
+}
+
+function continueAfterQuiz() {
+  stopSpeech();
+  quizIdx++;
+  // Check if this was after last slide
+  if (pendingQuizIdx === quizzes.length - 1) {
+    currentSlide++;
+    if (currentSlide >= slides.length) {
+      showResults();
+      return;
+    }
+  } else {
+    currentSlide++;
+  }
+  buildSlides();
+  // Re-render and show the new slide
+  const allSlides = document.querySelectorAll('.slide');
+  allSlides.forEach((s, i) => {
+    s.classList.toggle('active', i === currentSlide);
+  });
+  updateUI();
+  showScreen('story');
+}
+
+// ===== RESULTS =====
+function showResults() {
+  stopSpeech();
+  const total = quizzes.length;
+  const score = quizScores.reduce((a, b) => a + b, 0);
+  document.getElementById('scoreDisplay').textContent = `${score} / ${total}`;
+  document.getElementById('scoreLabel').textContent = `questions answered correctly`;
+
+  // Stars
+  const starPct = score / total;
+  let stars = starPct >= 0.85 ? 3 : starPct >= 0.5 ? 2 : 1;
+  let starsHtml = '';
+  for (let i = 0; i < 3; i++) starsHtml += `<span style="opacity:${i < stars ? 1 : 0.25}">⭐</span>`;
+  document.getElementById('starsRow').innerHTML = starsHtml;
+
+  // Trophy
+  document.getElementById('trophyEmoji').textContent = stars === 3 ? '🏆' : stars === 2 ? '🥈' : '🎖';
+
+  // Message
+  const msgs = [
+    "Great try! Read the story again and you'll do even better! 📖",
+    "Good job! You're learning the story well! 🌟",
+    "Amazing! You're a Little Red Riding Hood expert! 🎉"
+  ];
+  document.getElementById('resultsMessage').textContent = msgs[stars - 1];
+
+  // Breakdown
+  const bd = document.getElementById('resultsBreakdown');
+  bd.innerHTML = '';
+  quizAnswers.forEach((a, i) => {
+    const div = document.createElement('div');
+    div.className = 'breakdown-item ' + (a.ok ? 'correct-b' : 'wrong-b');
+    div.innerHTML = `<span class="bi-icon">${a.ok ? '✅' : '❌'}</span><div><b>Q${i+1}:</b> ${a.question}<br><small>${a.ok ? 'Correct!' : `Correct: ${a.correct}`}</small></div>`;
+    bd.appendChild(div);
+  });
+
+  showScreen('results');
+  const msg = `You scored ${score} out of ${total}! ${msgs[stars-1]}`;
+  setTimeout(() => speak(msg, null), 500);
+}
+
+function tryAgain() {
+  stopSpeech();
+  currentSlide = 0;
+  quizIdx = 0;
+  quizScores = [];
+  quizAnswers = [];
+  buildSlides();
+  updateUI();
+  showScreen('story');
+}
+
+// Init voices
+if (speechSynth.onvoiceschanged !== undefined) {
+  speechSynth.onvoiceschanged = () => {};
+}
+</script>
+</body>
+</html>
