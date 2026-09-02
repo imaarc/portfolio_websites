@@ -458,6 +458,15 @@ export default function EipiLanding() {
         </div>
       ) : null}
 
+      <section id="why" className="impact-section">
+        <p className="eyebrow">Impact</p>
+        <h2>One vehicle. 160,000+ monthly contact moments.</h2>
+        <p>
+          The redesign pulls this existing EIPI claim forward as a signature
+          storytelling moment instead of hiding it deep in copy.
+        </p>
+      </section>
+
       <section id="services" className="services-section">
         <div className="services-intro">
           <p className="eyebrow">What We Do</p>
@@ -495,15 +504,6 @@ export default function EipiLanding() {
             </a>
           ))}
         </div>
-      </section>
-
-      <section id="why" className="impact-section">
-        <p className="eyebrow">Impact</p>
-        <h2>One vehicle. 160,000+ monthly contact moments.</h2>
-        <p>
-          The redesign pulls this existing EIPI claim forward as a signature
-          storytelling moment instead of hiding it deep in copy.
-        </p>
       </section>
 
       <section className="why-section" data-reveal-section>
