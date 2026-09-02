@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 180" role="img" aria-labelledby="title desc">
+  <title id="title">EIPI</title>
+  <desc id="desc">Compact modern EIPI logo mark.</desc>
+  <defs>
+    <linearGradient id="redAccent" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#f12650" />
+      <stop offset="1" stop-color="#b90f32" />
+    </linearGradient>
+  </defs>
+
+  <rect x="14" y="30" width="192" height="92" fill="url(#redAccent)" />
+  <rect x="14" y="122" width="192" height="10" fill="#d7173f" />
+  <text
+    x="25"
+    y="112"
+    fill="#fff8f3"
+    font-family="Arial Black, Impact, system-ui, sans-serif"
+    font-size="94"
+    font-weight="900"
+    letter-spacing="-3"
+  >EIPI</text>
+</svg>

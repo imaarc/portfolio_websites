@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 132" role="img" aria-labelledby="title desc">
+  <title id="title">EIPI Belettering en Gevelreclame BV</title>
+  <desc id="desc">Modern EIPI logo with a compact red wordmark block, two-line descriptor, and red underline.</desc>
+  <defs>
+    <linearGradient id="redAccent" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#f12650" />
+      <stop offset="1" stop-color="#b90f32" />
+    </linearGradient>
+  </defs>
+
+  <g fill="none" fill-rule="evenodd">
+    <rect x="12" y="24" width="188" height="84" fill="url(#redAccent)" />
+    <rect x="12" y="108" width="576" height="9" fill="#d7173f" />
+
+    <text
+      x="24"
+      y="94"
+      fill="#fff8f3"
+      font-family="Arial Black, Impact, system-ui, sans-serif"
+      font-size="76"
+      font-weight="900"
+      letter-spacing="-2"
+    >EIPI</text>
+
+    <text
+      x="224"
+      y="61"
+      fill="#f7f2ea"
+      font-family="Inter, Arial, Helvetica, sans-serif"
+      font-size="34"
+      font-weight="900"
+      letter-spacing="1.2"
+    >BELETTERING</text>
+
+    <text
+      x="224"
+      y="96"
+      fill="#a9aaa6"
+      font-family="Inter, Arial, Helvetica, sans-serif"
+      font-size="29"
+      font-weight="800"
+      letter-spacing="1"
+    >&amp; GEVELRECLAME BV</text>
+  </g>
+</svg>
