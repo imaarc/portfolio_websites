@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { ArrowUpRight } from 'lucide-react';
 import { ContactBand } from '../sections/contact-band';
-import { SiteFooter, SiteNav } from '../sections/site-chrome';
+import { BackToTopButton, SiteFooter, SiteNav } from '../sections/site-chrome';
 
 const jobs = [
   {
@@ -37,7 +37,7 @@ export default function VacanciesPage() {
     <main className="site-shell vacancies-page">
       <SiteNav />
 
-      <section className="vacancies-hero">
+      <section id="top" className="vacancies-hero">
         <div className="vacancies-hero-inner">
           <p className="eyebrow">Careers at EIPI</p>
           <h1>Vacancies</h1>
@@ -86,6 +86,7 @@ export default function VacanciesPage() {
 
       <ContactBand />
       <SiteFooter />
+      <BackToTopButton />
     </main>
   );
 }

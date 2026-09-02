@@ -1424,6 +1424,34 @@ img {
   text-transform: uppercase;
 }
 
+.back-to-top {
+  position: fixed;
+  right: clamp(1rem, 2.2vw, 1.6rem);
+  bottom: clamp(1rem, 2.2vw, 1.6rem);
+  z-index: 25;
+  display: grid;
+  width: 3.25rem;
+  height: 3.25rem;
+  place-items: center;
+  border: 1px solid rgb(255 255 255 / 16%);
+  background: #d7173f;
+  color: white;
+  box-shadow:
+    0 14px 34px rgb(0 0 0 / 38%),
+    0 0 28px rgb(215 23 63 / 24%);
+  transition:
+    border-color 180ms ease,
+    background 180ms ease,
+    transform 180ms ease;
+}
+
+.back-to-top:hover,
+.back-to-top:focus-visible {
+  border-color: rgb(255 255 255 / 36%);
+  background: #f12650;
+  transform: translateY(-2px);
+}
+
 :focus-visible {
   outline: 2px solid #d7173f;
   outline-offset: 4px;

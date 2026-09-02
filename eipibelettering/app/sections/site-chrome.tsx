@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUp, ArrowUpRight } from 'lucide-react';
 
 export function SiteNav() {
   return (
@@ -28,5 +28,18 @@ export function SiteFooter() {
       <span>Eipi Belettering en Gevelreclame b.v.</span>
       <span>Volume 69 - 70, 1446 WG Purmerend</span>
     </footer>
+  );
+}
+
+export function BackToTopButton() {
+  return (
+    <a
+      className="back-to-top"
+      href="#top"
+      aria-label="Back to top"
+      title="Back to top"
+    >
+      <ArrowUp aria-hidden="true" size={22} />
+    </a>
   );
 }

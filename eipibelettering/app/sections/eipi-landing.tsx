@@ -16,7 +16,7 @@ import useEmblaCarousel from 'embla-carousel-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ContactBand } from './contact-band';
-import { SiteFooter, SiteNav } from './site-chrome';
+import { BackToTopButton, SiteFooter, SiteNav } from './site-chrome';
 
 const workItems = [
   {
@@ -636,6 +636,7 @@ export default function EipiLanding() {
       <ContactBand />
 
       <SiteFooter />
+      <BackToTopButton />
     </main>
   );
 }
