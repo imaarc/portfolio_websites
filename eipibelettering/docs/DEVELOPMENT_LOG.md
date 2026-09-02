@@ -481,3 +481,13 @@ Remaining:
 
 - Extracted the home contact band into a reusable component.
 - Added the same Start a Project contact section to the `/vacancies` page before the footer.
+
+### 2026-09-02 - Vercel Deployment Fix
+
+- Added Next.js as an explicit dependency for Vercel deployment.
+- Switched the default project scripts to `next dev`, `next build`, and `next start`, while preserving the original Vinext/Sites workflow under `sites:*` scripts.
+- Added a Next-compatible PostCSS config for Tailwind CSS processing.
+- Removed remote `next/font/google` usage so production builds do not depend on fetching Google Fonts during build.
+- Added `vercel.json` with explicit Next.js framework and npm build/install commands.
+- Verified `next build` succeeds and prerenders `/` and `/vacancies` as static routes.
+- Vercel project setting should use `eipibelettering` as the Root Directory when deploying from the parent `portfolio_websites` repository.

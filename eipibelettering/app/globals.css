@@ -1,6 +1,4 @@
 @import 'tailwindcss';
-@import 'tw-animate-css';
-@import 'shadcn/tailwind.css';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -52,6 +50,8 @@
   --input: rgb(247 242 234 / 18%);
   --ring: #d7173f;
   --radius: 0.5rem;
+  --font-geist-sans: Arial, Helvetica, sans-serif;
+  --font-geist-mono: 'Courier New', Courier, monospace;
   color-scheme: dark;
 }
 
