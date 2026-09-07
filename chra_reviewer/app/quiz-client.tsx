@@ -665,6 +665,7 @@ export default function QuizClient() {
 
     const lifecycle = new AbortController();
     const reportError = (error: unknown) => {
+      if (error instanceof DOMException && error.name === 'AbortError') return;
       console.error('WebMCP registration failed', error);
     };
 

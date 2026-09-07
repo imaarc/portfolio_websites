@@ -1,0 +1,5 @@
+{
+  "installCommand": "cd chra_reviewer && npm install",
+  "buildCommand": "cd chra_reviewer && npm run build",
+  "outputDirectory": "chra_reviewer/dist"
+}
