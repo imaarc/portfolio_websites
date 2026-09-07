@@ -2,9 +2,9 @@ import { BookOpenCheck, Calculator, ClipboardList, Scale } from 'lucide-react';
 import QuizClient from './quiz-client';
 
 const statCards = [
-  { label: 'Question bank', value: '68', icon: ClipboardList },
+  { label: 'Question bank', value: '400', icon: ClipboardList },
   { label: 'Reviewers', value: '2', icon: BookOpenCheck },
-  { label: 'Core topics', value: '19', icon: Scale },
+  { label: 'Core topics', value: '26', icon: Scale },
   { label: 'Modes', value: 'Switch + drill', icon: Calculator },
 ];
 
